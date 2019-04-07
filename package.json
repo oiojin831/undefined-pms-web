@@ -3,13 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.15.2",
+    "firebase": "^5.9.1",
+    "lodash": "^4.17.11",
+    "luxon": "^1.12.1",
+    "moment": "^2.24.0",
     "react": "^16.8.5",
+    "react-big-scheduler": "^0.2.6",
+    "react-dnd": "^5.0.0",
+    "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "^16.8.5",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=8080 react-scripts start",
     "build": "react-scripts build",
+    "now-build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
