@@ -10,9 +10,7 @@ class Sinsa extends React.Component {
     this.state = {
       rooms: [],
       filter: '',
-      date: DateTime.local()
-        .setZone('Asia/Seoul')
-        .plus({days: 1}),
+      date: DateTime.local().setZone('Asia/Seoul'),
       loading: false,
     }
   }
