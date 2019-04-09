@@ -2,14 +2,7 @@ import React from 'react'
 import {db} from './firebase.js'
 import './Sinsa.css'
 import {DateTime} from 'luxon'
-
-const formatDate = date => date.toISO().substring(0, 10)
-
-const compare = (a, b) => {
-  if (a.roomNumber < b.roomNumber) return -1
-  if (a.roomNumber > b.roomNumber) return 1
-  return 0
-}
+import {compare, formatDate} from './util'
 
 class Sinsa extends React.Component {
   constructor(props) {
@@ -17,7 +10,9 @@ class Sinsa extends React.Component {
     this.state = {
       rooms: [],
       filter: '',
-      date: DateTime.local().setZone('Asia/Seoul'),
+      date: DateTime.local()
+        .setZone('Asia/Seoul')
+        .plus({days: 1}),
       loading: false,
     }
   }
@@ -26,30 +21,28 @@ class Sinsa extends React.Component {
     this.setState({loading: true})
 
     const rooms = []
+
     await db
       .collection('reservations')
       .where('stayingDates', 'array-contains', formatDate(this.state.date))
       .get()
       .then(snap =>
         snap.forEach(doc => {
+          const {checkInDate, checkOutDate} = doc.data()
+          const {checkInTime, checkOutTime} = doc.data()
+          const {nights, phoneNumber, guestName, guests} = doc.data()
           const {
-            checkInDate,
-            checkOutDate,
-            guestName,
-            guests,
-            nights,
-            phoneNumber,
+            roomNumber,
             platform,
             reservationCode,
-            roomNumber,
-            checkInTime,
-            checkOutTime,
+            cleaningMemo,
           } = doc.data()
           rooms.push({
-            key: doc.id,
-            doc, // DocumentSnapshot
+            cleaningMemo,
             checkInDate,
             checkOutDate,
+            checkInTime,
+            checkOutTime,
             guestName,
             guests,
             nights,
@@ -57,8 +50,6 @@ class Sinsa extends React.Component {
             platform,
             reservationCode,
             roomNumber,
-            checkInTime,
-            checkOutTime,
           })
         }),
       )
@@ -72,10 +63,14 @@ class Sinsa extends React.Component {
     if (this.state.loading) {
       return <div>loading</div>
     }
-    console.log('this.stat.rooms', this.state.rooms)
-    let re = new RegExp(this.state.filter)
+    const guestHouseType = new RegExp(this.state.filter)
     const reDmyk = new RegExp('dmyk')
     const isDmyk = room => reDmyk.test(room)
+
+    const filteredRoom = this.state.rooms
+      .sort(compare)
+      .filter(room => guestHouseType.test(room.roomNumber))
+      .filter(room => room.checkInDate === formatDate(this.state.date))
 
     return (
       <div className="outter">
@@ -86,47 +81,40 @@ class Sinsa extends React.Component {
           </span>
           <span onClick={() => this.setState({filter: 'dmyk'})}>**dmyk</span>
         </div>
-        {this.state.rooms
-          .sort(compare)
-          .filter(room => re.test(room.roomNumber))
-          .filter(room => room.checkInDate === formatDate(this.state.date))
-          .map(room => {
-            const yesterday = this.state.rooms.reduce(
-              (yesterdayRooms, yRoom) => {
-                if (yRoom.checkOutDate === formatDate(this.state.date)) {
-                  console.log(
-                    'checkoutdate',
-                    yRoom.checkOutDate,
-                    yRoom.roomNumber,
-                  )
-                  if (yRoom.roomNumber === room.roomNumber) {
-                    yesterdayRooms.push(yRoom)
-                  }
-                }
-                return yesterdayRooms
-              },
-              [],
-            )
-            const numOfGuests =
-              parseInt(room.guests) === 1 ? 2 : parseInt(room.guests)
+        {filteredRoom.map(room => {
+          const yesterday = this.state.rooms.reduce((yesterdayRooms, yRoom) => {
+            if (yRoom.checkOutDate === formatDate(this.state.date)) {
+              if (yRoom.roomNumber === room.roomNumber) {
+                yesterdayRooms.push(yRoom)
+              }
+            }
+            return yesterdayRooms
+          }, [])
 
-            console.log(room.roomNumber, yesterday[0])
-            return (
-              <div className="box">
-                <h1>{room.roomNumber}</h1>
-                <div>{`Check Out: ${
-                  yesterday[0]
-                    ? yesterday[0].checkOutTime
-                    : isDmyk(room.roomNumber)
-                    ? 10
-                    : 11
-                }`}</div>
-                <div>{`Check In: ${room.checkInTime}`}</div>
-                <div>{`towels: ${numOfGuests * room.nights * 1.5}`}</div>
-                <div>{`*${room.platform} - ${room.reservationCode}*`}</div>
+          const numOfGuests =
+            parseInt(room.guests) === 1 ? 2 : parseInt(room.guests)
+          const checkOutTime = yesterday[0]
+            ? yesterday[0].checkOutTime
+            : isDmyk(room.roomNumber)
+            ? 10
+            : 11
+
+          return (
+            <div key={room.reservationCode} className="box">
+              <h1>{room.roomNumber}</h1>
+              <div>{`Check Out: ${checkOutTime}`}</div>
+              <div>{`Check In: ${room.checkInTime}`}</div>
+              <div>{`# of guests: ${numOfGuests}`}</div>
+              <div>{`towels: ${numOfGuests * room.nights * 1.5}`}</div>
+              <div>{`*${room.platform} - ${room.reservationCode}*`}</div>
+              <div style={{color: 'red'}}>
+                {room.cleaningMemo
+                  ? `Cleaning Memo: ${room.cleaningMemo}`
+                  : null}
               </div>
-            )
-          })}
+            </div>
+          )
+        })}
       </div>
     )
   }

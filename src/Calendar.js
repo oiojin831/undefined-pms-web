@@ -10,6 +10,7 @@ import Scheduler, {
   ViewTypes,
   DATE_FORMAT,
 } from 'react-big-scheduler'
+import rbsConfig from './rbsConfig.js'
 import {DragDropContext} from 'react-dnd'
 
 import {db} from './firebase.js'
@@ -21,6 +22,7 @@ const colors = {
   expedia: '#3b53ed',
   agoda: '#3b37ed',
   ctrip: '#baed3b',
+  cash: '#37d664',
 }
 
 class Basic extends Component {
@@ -31,6 +33,9 @@ class Basic extends Component {
     let schedulerData = new SchedulerData(
       new moment().format(DATE_FORMAT),
       ViewTypes.Month,
+      false,
+      false,
+      rbsConfig,
     )
     schedulerData.localeMoment.locale('en')
     schedulerData.setResources(resources)
@@ -46,8 +51,8 @@ class Basic extends Component {
     this.setState({loading: true})
     const eventsData = []
     db.collection('reservations')
-      .where('checkInDate', '>=', '2019-04-04')
-      .where('checkInDate', '<=', '2019-04-11')
+      .where('checkInDate', '>=', '2019-04-01')
+      .where('checkInDate', '<=', '2019-04-30')
       .get()
       .then(snap => {
         snap.forEach(doc => {
@@ -65,12 +70,11 @@ class Basic extends Component {
           } = doc.data()
           eventsData.push({
             id: doc.id,
-            start: checkInDate,
-            end: checkOutDate,
+            start: `${checkInDate} ${checkInTime}`,
+            end: `${checkOutDate} ${checkOutTime}`,
             resourceId: roomNumber,
-            title: `${guestName}/n${nights}nights, ${guests}, ${phoneNumber}, ${
-              doc.id
-            }, in: ${checkInTime}, out: ${checkOutTime}`,
+            title: guestName,
+            nights: nights,
             bgColor: colors[platform],
           })
         })
@@ -102,6 +106,7 @@ class Basic extends Component {
             updateEventEnd={this.updateEventEnd}
             moveEvent={this.moveEvent}
             newEvent={this.newEvent}
+            eventItemTemplateResolver={this.eventItemTemplateResolver}
           />
         </div>
       </div>
@@ -216,6 +221,44 @@ class Basic extends Component {
     this.setState({
       viewModel: schedulerData,
     })
+  }
+  eventItemTemplateResolver = (
+    schedulerData,
+    event,
+    bgColor,
+    isStart,
+    isEnd,
+    mustAddCssClass,
+    mustBeHeight,
+    agendaMaxEventWidth,
+  ) => {
+    let titleText = schedulerData.behaviors.getEventTextFunc(
+      schedulerData,
+      event,
+    )
+    let divStyle = {
+      backgroundColor: event.bgColor,
+      height: mustBeHeight,
+    }
+    if (!!agendaMaxEventWidth)
+      divStyle = {...divStyle, maxWidth: agendaMaxEventWidth}
+
+    const percent = 100 / ((event.nights + 1) * 2)
+    const marginWidth = schedulerData.viewType === 1 ? `${percent}%` : '60px'
+
+    return (
+      <div style={{paddingLeft: marginWidth, paddingRight: marginWidth}}>
+        <div key={event.id} className={mustAddCssClass} style={divStyle}>
+          <span
+            style={{
+              marginLeft: '4px',
+              lineHeight: `${mustBeHeight}px`,
+            }}>
+            {titleText}
+          </span>
+        </div>
+      </div>
+    )
   }
 }
 

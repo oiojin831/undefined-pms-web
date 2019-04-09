@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import Sinsa from './Sinsa.js'
 import Calendar from './Calendar.js'
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 class App extends Component {
   render() {
