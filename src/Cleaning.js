@@ -1,10 +1,10 @@
 import React from 'react'
 import {db} from './firebase.js'
-import './Sinsa.css'
+import './Cleaning.css'
 import {DateTime} from 'luxon'
 import {compare, formatDate} from './util'
 
-class Sinsa extends React.Component {
+class Cleaning extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -118,4 +118,4 @@ class Sinsa extends React.Component {
   }
 }
 
-export default Sinsa
+export default Cleaning

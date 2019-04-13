@@ -2,8 +2,12 @@ import ViewTypes from './ViewTypes'
 
 export default {
   resourceName: 'Room',
-  monthResourceTableWidth: 70,
-  monthCellWidth: 120,
+  monthResourceTableWidth: 60,
+  monthCellWidth: 60,
+  weekResourceTableWidth: '10%',
+  tableHeaderHeight: 30,
+  eventItemHeight: 22,
+  eventItemLineHeight: 24,
   views: [
     {
       viewName: 'Week',
