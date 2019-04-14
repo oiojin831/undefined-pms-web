@@ -1,7 +1,7 @@
 import React from 'react'
 import {db} from './firebase.js'
 import {Formik} from 'formik'
-import {InputNumber, SubmitButton} from '@jbuschke/formik-antd'
+import {Input, InputNumber, SubmitButton} from '@jbuschke/formik-antd'
 
 class SearchResult extends React.Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class SearchResult extends React.Component {
     this.state = {
       loading: true,
       times: {},
+      cleaningMemo: '',
     }
   }
   componentDidMount() {
@@ -26,7 +27,11 @@ class SearchResult extends React.Component {
       }
       return result
     }, {})
-    this.setState({times, loading: false})
+    const checkInRes = this.props.reservations.filter(
+      res => res.checkInDate === this.props.date,
+    )
+    const cleaningMemo = checkInRes[0].cleaningMemo
+    this.setState({times, loading: false, cleaningMemo})
   }
   render() {
     if (this.state.loading) {
@@ -43,6 +48,7 @@ class SearchResult extends React.Component {
             checkOutTime: this.state.times['checkOutTime']
               ? this.state.times['checkOutTime'].time
               : 0,
+            cleaningMemo: this.state.cleaningMemo,
           }}
           onSubmit={async (values, actions) => {
             const checkInQuery = db
@@ -59,6 +65,7 @@ class SearchResult extends React.Component {
               if (values.checkOutTime) {
                 await checkOutQuery.update({checkOutTime: values.checkOutTime})
               }
+              await checkInQuery.update({cleaningMemo: values.cleaningMemo})
               actions.resetForm({})
             } catch (error) {
               console.log('error', error.toString())
@@ -80,6 +87,10 @@ class SearchResult extends React.Component {
               <div style={{marginTop: '10px'}}>
                 <span>CheckOutTime: </span>
                 <InputNumber name="checkOutTime" />
+              </div>
+              <div style={{marginTop: '10px'}}>
+                <span>cleaning memo</span>
+                <Input name="cleaningMemo" />
               </div>
               <div style={{marginTop: '10px'}}>
                 <SubmitButton disabled={isSubmitting}>Submit</SubmitButton>
