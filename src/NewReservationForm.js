@@ -108,22 +108,26 @@ export default () => {
                 values.guestHouseName === 'dmyk' ? dmykOptions : sinsaOptions,
               )}
             </Select>
-            <div style={{marginTop: '10px'}}>
-              <Input addonBefore="Phone Number" name="phoneNumber" />
-            </div>
-            <div style={{marginTop: '10px'}}>
-              <DatePicker name="checkInDate" />
-              <DatePicker name="checkOutDate" />
-            </div>
-            <div style={{marginTop: '10px'}}>
-              <InputNumber name="checkInTime" style={{marginRight: '10px'}} />
-              <InputNumber name="checkOutTime" />
-            </div>
-            <div style={{marginTop: '10px'}}>
+            <Input
+              style={{marginTop: '10px'}}
+              addonBefore="Phone Number"
+              name="phoneNumber"
+            />
+            <DatePicker
+              style={{marginRight: '10px', marginTop: '10px'}}
+              name="checkInDate"
+            />
+            <InputNumber name="checkInTime" />
+            <DatePicker
+              style={{marginRight: '10px', marginTop: '10px'}}
+              name="checkOutDate"
+            />
+            <InputNumber name="checkOutTime" />
+            <div style={{margin: '10px', textAlign: 'left'}}>
               <span style={{marginRight: '10px'}}>guests: </span>
               <InputNumber name="guests" />
             </div>
-            <div style={{marginTop: '10px'}}>
+            <div style={{margin: '10px'}}>
               <SubmitButton disabled={isSubmitting}>Submit</SubmitButton>
             </div>
           </Content>
