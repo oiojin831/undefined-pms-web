@@ -4,6 +4,7 @@ import Cleaning from './Cleaning.js'
 import Home from './Home.js'
 import Calendar from './Calendar.js'
 import Dashboard from './Dashboard.js'
+import NewReservationForm from './NewReservationForm.js'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
         </div>
         <Route path="/calendar/" component={Calendar} />
         <Route path="/dashboard/" component={Dashboard} />
+        <Route path="/new/" component={NewReservationForm} />
       </Router>
     )
   }

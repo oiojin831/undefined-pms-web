@@ -20,3 +20,12 @@ export const platformColor = {
   ctrip: '#baed3b',
   cash: '#37d664',
 }
+
+export const getDaysArray = (start, end) => {
+  const arr = []
+  const dt = start
+  for (dt; dt <= end; dt.setDate(dt.getDate() + 1)) {
+    arr.push(new Date(dt))
+  }
+  return arr.map(v => v.toISOString().slice(0, 10))
+}

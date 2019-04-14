@@ -1,7 +1,7 @@
 import React from 'react'
 import {db} from './firebase.js'
 import {Formik} from 'formik'
-import {InputNumberField, SubmitButton} from '@jbuschke/formik-antd'
+import {InputNumber, SubmitButton} from '@jbuschke/formik-antd'
 
 class SearchResult extends React.Component {
   constructor(props) {
@@ -75,11 +75,11 @@ class SearchResult extends React.Component {
             <React.Fragment>
               <div style={{marginTop: '10px'}}>
                 <span>CheckInTime: </span>
-                <InputNumberField name="checkInTime" />
+                <InputNumber name="checkInTime" />
               </div>
               <div style={{marginTop: '10px'}}>
                 <span>CheckOutTime: </span>
-                <InputNumberField name="checkOutTime" />
+                <InputNumber name="checkOutTime" />
               </div>
               <div style={{marginTop: '10px'}}>
                 <SubmitButton disabled={isSubmitting}>Submit</SubmitButton>
