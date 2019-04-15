@@ -1,7 +1,7 @@
 import {DateTime} from 'luxon'
 export const formatDate = date => date.toISO().substring(0, 10)
 
-const now = DateTime.utc().setZone('Asia/Seoul')
+export const now = DateTime.utc().setZone('Asia/Seoul')
 const tmr = now.plus({days: 1})
 
 export const formattedNow = now.toFormat('yyyy-MM-dd')
@@ -28,4 +28,25 @@ export const getDaysArray = (start, end) => {
     arr.push(new Date(dt))
   }
   return arr.map(v => v.toISOString().slice(0, 10))
+}
+
+export const filterGuestHouse = (guestHouseName, filter) => {
+  if (filter) {
+    return filter === guestHouseName
+  }
+  // empty string will return everything
+  return true
+}
+
+export const numOfGuests = guests => {
+  return guests === 1 ? 2 : guests
+}
+
+export const numOfTowels = (guests, nights) => {
+  const num = Math.round(guests * nights * 1.5)
+  if (num > 10) {
+    return 10
+  } else {
+    return num
+  }
 }
