@@ -1,9 +1,15 @@
 import React, {useState, useEffect} from 'react'
 
-import {db} from '../firebase'
-import {compare, filterGuestHouse, numOfGuests, numOfTowels, now} from '../util'
+import {db} from '../../firebase'
+import {
+  compare,
+  filterGuestHouse,
+  numOfGuests,
+  numOfTowels,
+  now,
+} from '../../util'
 
-import './Cleaning.css'
+import './index.css'
 
 export default () => {
   const [filter, setFilter] = useState('')
@@ -27,14 +33,16 @@ export default () => {
   }, [date])
 
   return (
-    <div>
-      <span onClick={() => setDate(date.minus({days: 1}))}>{'<<<<'}</span>
-      <span>{date.toFormat('yyyy-MM-dd')}</span>
-      <span onClick={() => setDate(date.plus({days: 1}))}>{'>>>>'}</span>
-      <div>
-        <span onClick={() => setFilter('sinsa')}>sinsa**</span>
-        <span onClick={() => setFilter('')}>**ALL**</span>
-        <span onClick={() => setFilter('dmyk')}>**dmyk</span>
+    <div style={{textAlign: 'center', fontSize: '14px'}}>
+      <div style={{marginTop: '3px'}}>
+        <span onClick={() => setDate(date.minus({days: 1}))}>{'<<<<< '}</span>
+        <span>{date.toFormat('yyyy-MM-dd')}</span>
+        <span onClick={() => setDate(date.plus({days: 1}))}>{' >>>>>'}</span>
+      </div>
+      <div style={{marginTop: '3px', borderBottom: '1px solid black'}}>
+        <span onClick={() => setFilter('sinsa')}>SINSA--</span>
+        <span onClick={() => setFilter('')}>---ALL---</span>
+        <span onClick={() => setFilter('dmyk')}>--DMYK</span>
       </div>
 
       {reservations

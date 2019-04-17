@@ -7,9 +7,20 @@ const tmr = now.plus({days: 1})
 export const formattedNow = now.toFormat('yyyy-MM-dd')
 export const formattedTmr = tmr.toFormat('yyyy-MM-dd')
 
+export const fromISOtoString = dateFromCalendar =>
+  DateTime.fromISO(dateFromCalendar, {zone: 'Asia/Seoul'}).toFormat(
+    'yyyy-MM-dd',
+  )
+
 export const compare = (a, b) => {
   if (a.roomNumber < b.roomNumber) return -1
   if (a.roomNumber > b.roomNumber) return 1
+  return 0
+}
+
+export const compareCheckInDate = (a, b) => {
+  if (a.checkInDate < b.checkInDate) return -1
+  if (a.checkInDate > b.checkInDate) return 1
   return 0
 }
 

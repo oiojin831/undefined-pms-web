@@ -1,18 +1,20 @@
 import React, {Component} from 'react'
 import 'moment/locale/ko'
 import {DateTime} from 'luxon'
-import './Calendar.css'
+import './index.css'
 import 'react-big-scheduler/lib/css/style.css'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Scheduler, {SchedulerData, ViewTypes} from 'react-big-scheduler'
 import rbsConfig from './rbsConfig.js'
 import {DragDropContext} from 'react-dnd'
 
-import {db} from './firebase.js'
+import {db} from '../../firebase.js'
 
-import {resources} from './Constants/roomName.js'
+import {resources} from '../../Constants/roomName.js'
 
-import {platformColor, formatDate} from './util.js'
+import {platformColor, formatDate} from '../../util.js'
+
+// TODO: click to see reservation number
 
 class Basic extends Component {
   constructor(props) {
@@ -71,7 +73,7 @@ class Basic extends Component {
       viewModel.setEvents(this.state.eventsData)
     }
     return (
-      <div>
+      <div style={{marginTop: '50px'}}>
         <div style={{fontSize: '8px'}}>
           <Scheduler
             schedulerData={viewModel}

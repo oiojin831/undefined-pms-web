@@ -53,4 +53,21 @@ const resources = [
   },
 ]
 
-export {resources}
+const dmykOptions = [
+  {label: 'dmyk101', value: 'dmyk101'},
+  {label: 'dmyk102', value: 'dmyk102'},
+  {label: 'dmyk103', value: 'dmyk103'},
+  {label: 'dmyk104', value: 'dmyk104'},
+  {label: 'dmyk201', value: 'dmyk201'},
+  {label: 'dmyk202', value: 'dmyk202'},
+  {label: 'dmyk203', value: 'dmyk203'},
+  {label: 'dmyk204', value: 'dmyk204'},
+  {label: 'dmyk300', value: 'dmyk300'},
+]
+const sinsaOptions = [
+  {label: 'sinsa101', value: 'sinsa101'},
+  {label: 'sinsaB01', value: 'sinsaB01'},
+  {label: 'sinsaB02', value: 'sinsaB02'},
+  {label: 'sinsaB03', value: 'sinsaB03'},
+]
+export {resources, dmykOptions, sinsaOptions}
