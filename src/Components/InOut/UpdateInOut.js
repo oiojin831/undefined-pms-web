@@ -27,7 +27,6 @@ export default props => {
         onSubmit={async (values, actions) => {
           actions.setSubmitting(true)
           const query = db.collection('reservations').doc(props.id)
-          console.log('props.id', props.id)
           try {
             await query.update({
               checkInTime: values.checkInTime,
