@@ -1,14 +1,13 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link} from '@reach/router'
 
-export default () => {
+export default ({children}) => {
   return (
     <React.Fragment>
-      <h1>welcom to undefinedist Hotels</h1>
+      <h1>Welcom to undefinedist Hotels</h1>
       <br />
-      <h1>
-        <Link to="/cleaning/">Cleaning</Link>
-      </h1>
+      <h1>Sinsa / DMYK</h1>
+      {children}
     </React.Fragment>
   )
 }

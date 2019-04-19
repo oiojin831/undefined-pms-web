@@ -52,14 +52,16 @@ class Basic extends Component {
             guestName,
             nights,
             roomNumber,
+            phoneNumber,
             platform,
+            reservationCode,
           } = doc.data()
           eventsData.push({
             id: doc.id,
             start: checkInDate,
             end: checkOutDate,
             resourceId: roomNumber,
-            title: guestName,
+            title: `${guestName}: ${phoneNumber}, ${reservationCode}`,
             nights: nights,
             bgColor: platformColor[platform],
           })

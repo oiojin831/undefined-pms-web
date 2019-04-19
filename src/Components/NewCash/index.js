@@ -10,7 +10,12 @@ import {
 } from '@jbuschke/formik-antd'
 import {DateTime} from 'luxon'
 
-import {formattedNow, formattedTmr, getDaysArray} from '../../util.js'
+import {
+  formattedNow,
+  formattedTmr,
+  getDaysArray,
+  fromISOtoString,
+} from '../../util.js'
 import {db} from '../../firebase.js'
 import {dmykOptions, sinsaOptions} from '../../Constants/roomName'
 
@@ -52,8 +57,8 @@ export default () => {
               .toString()
               .substring(0, 10),
             stayingDates: getDaysArray(
-              new Date(values.checkInDate),
-              new Date(values.checkOutDate),
+              new Date(fromISOtoString(values.checkInDate)),
+              new Date(fromISOtoString(values.checkOutDate)),
             ),
           })
         actions.setSubmitting(false)
