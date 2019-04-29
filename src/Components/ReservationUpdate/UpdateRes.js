@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {db} from '../../firebase.js'
 import {Formik} from 'formik'
-import {Input, InputNumber, SubmitButton} from '@jbuschke/formik-antd'
+import {InputNumber, SubmitButton} from '@jbuschke/formik-antd'
 
 export default props => {
   const [inTime, setInTime] = useState(props.checkInTime)

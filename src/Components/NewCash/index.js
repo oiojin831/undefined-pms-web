@@ -26,24 +26,29 @@ export default () => {
       initialValues={{
         checkInDate: formattedNow,
         checkOutDate: formattedTmr,
-        checkInTime: 11,
-        checkOutTime: 15,
+        checkInTime: 16,
+        checkOutTime: 10,
         guests: 2,
         platform: 'cash',
         guestHouseName: 'dmyk',
       }}
       onSubmit={async (values, actions) => {
         actions.setSubmitting(true)
+        const reservationCode = `${DateTime.fromISO(values.checkInDate, {
+          zone: 'Asia/Seoul',
+        })
+          .toString()
+          .substring(0, 10)
+          .replace(/-/g, '')}${values.roomNumber}`
+
+        const stayingDates = getDaysArray(
+          new Date(fromISOtoString(values.checkInDate)),
+          new Date(fromISOtoString(values.checkOutDate)),
+        )
+
         await db
           .collection('reservations')
-          .doc(
-            `${values.platform}-${DateTime.fromISO(values.checkInDate, {
-              zone: 'Asia/Seoul',
-            })
-              .toString()
-              .substring(0, 10)
-              .replace(/-/g, '')}${values.roomNumber}`,
-          )
+          .doc(`${values.platform}-${reservationCode}`)
           .set({
             ...values,
             checkInDate: DateTime.fromISO(values.checkInDate, {
@@ -56,10 +61,9 @@ export default () => {
             })
               .toString()
               .substring(0, 10),
-            stayingDates: getDaysArray(
-              new Date(fromISOtoString(values.checkInDate)),
-              new Date(fromISOtoString(values.checkOutDate)),
-            ),
+            stayingDates: stayingDates,
+            nights: stayingDates.length - 1,
+            reservationCode,
           })
         actions.setSubmitting(false)
       }}

@@ -41,8 +41,8 @@ class Basic extends Component {
     this.setState({loading: true})
     const eventsData = []
     db.collection('reservations')
-      .where('checkInDate', '>=', formatDate(this.state.date.minus({days: 30})))
-      .where('checkInDate', '<=', formatDate(this.state.date.plus({days: 30})))
+      .where('checkInDate', '>=', formatDate(this.state.date.minus({days: 40})))
+      .where('checkInDate', '<=', formatDate(this.state.date.plus({days: 90})))
       .get()
       .then(snap => {
         snap.forEach(doc => {
