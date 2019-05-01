@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import Home from './Components/Home'
 import ReservationUpdate from './Components/ReservationUpdate'
+import UpdateRes from './Components/ReservationUpdate/UpdateRes'
+import GetReservationId from './Components/ReservationUpdate/GetReservationId'
+import Itinerary from './Components/ReservationUpdate/Itinerary'
+import ExtendTime from './Components/ReservationUpdate/ExtendTime'
 import {firebase} from './firebase'
 import Dashboard from './Components/Dashboard'
 import Cleaning from './Components/Cleaning'
@@ -9,6 +13,7 @@ import Deposit from './Components/Deposit'
 import InOut from './Components/InOut'
 import NewCash from './Components/NewCash'
 import Admin from './Components/Admin'
+import {SelfCheckIn, SCIHome} from './Components/SelfCheckIn'
 
 import {Router} from '@reach/router'
 
@@ -35,7 +40,19 @@ export default () => {
     <Router>
       <Home path="/">
         <NotFound default />
-        <ReservationUpdate path="/reservation/:id" />
+        <SelfCheckIn path="/self-check-in">
+          <NotFound default />
+          <SCIHome path="/" />
+        </SelfCheckIn>
+        <ReservationUpdate path="/reservation">
+          <NotFound default />
+          <GetReservationId path="/" />
+          <UpdateRes path=":id">
+            <NotFound default />
+            <ExtendTime path="/" />
+            <Itinerary path="itinerary" />
+          </UpdateRes>
+        </ReservationUpdate>
       </Home>
       <Dashboard path="/dashboard" user={user} admin={admin}>
         <NotFound default />
