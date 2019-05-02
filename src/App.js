@@ -13,7 +13,14 @@ import Deposit from './Components/Deposit'
 import InOut from './Components/InOut'
 import NewCash from './Components/NewCash'
 import Admin from './Components/Admin'
-import {SelfCheckIn, SCIHome} from './Components/SelfCheckIn'
+import {
+  SelfCheckIn,
+  SCIHome,
+  Platform,
+  Airbnb,
+  Others,
+  CheckInInfo,
+} from './Components/SelfCheckIn'
 
 import {Router} from '@reach/router'
 
@@ -43,6 +50,10 @@ export default () => {
         <SelfCheckIn path="/self-check-in">
           <NotFound default />
           <SCIHome path="/" />
+          <Platform path="platform" />
+          <Airbnb path="platform/airbnb" />
+          <Others path="platform/others" />
+          <CheckInInfo path="platform/check-in-info" />
         </SelfCheckIn>
         <ReservationUpdate path="/reservation">
           <NotFound default />
