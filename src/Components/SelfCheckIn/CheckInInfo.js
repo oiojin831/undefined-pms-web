@@ -1,5 +1,4 @@
 import React from 'react'
-import {navigate} from '@reach/router'
 
 const passCode = {
   dmyk101: '0424#',
@@ -14,13 +13,35 @@ const passCode = {
 }
 
 export default props => {
-  console.log('helehl', JSON.stringify(props))
   return props.location ? (
-    <React.Fragment>
+    <div
+      style={{
+        color: 'white',
+        fontSize: '30px',
+        height: '50vh',
+        display: 'flex',
+        paddingTop: '30px',
+        paddingRight: '10px',
+        justifyContent: 'start',
+        flexDirection: 'column',
+        textAlign: 'right',
+      }}>
       <div>Your room is..</div>
-      <div>{props.location.state.roomNumber}</div>
-      <div>{passCode[props.location.state.roomNumber]}</div>
-    </React.Fragment>
+      <br />
+      <div
+        style={{
+          fontWeight: 'bold',
+          fontSize: '40px',
+        }}>{`Room ${props.location.state.roomNumber
+        .match(/\d/g)
+        .join('')}`}</div>
+      <div
+        style={{
+          fontWeight: 'bold',
+          fontSize: '40px',
+        }}>{`Passcode ${passCode[props.location.state.roomNumber]}`}</div>
+      <div style={{fontSize: '10px'}}>Don't forget to enter # in the end.</div>
+    </div>
   ) : (
     <div>no</div>
   )

@@ -17,9 +17,11 @@ import {
   SelfCheckIn,
   SCIHome,
   Platform,
+  PlatformHome,
   Airbnb,
   Others,
   CheckInInfo,
+  DmykInfo,
 } from './Components/SelfCheckIn'
 
 import {Router} from '@reach/router'
@@ -50,10 +52,14 @@ export default () => {
         <SelfCheckIn path="/self-check-in">
           <NotFound default />
           <SCIHome path="/" />
-          <Platform path="platform" />
-          <Airbnb path="platform/airbnb" />
-          <Others path="platform/others" />
-          <CheckInInfo path="platform/check-in-info" />
+          <Platform path="platform">
+            <NotFound default />
+            <PlatformHome path="/" />
+            <Airbnb path="airbnb" />
+            <Others path="others" />
+            <CheckInInfo path="check-in-info" />
+            <DmykInfo path="dmyk-info" />
+          </Platform>
         </SelfCheckIn>
         <ReservationUpdate path="/reservation">
           <NotFound default />

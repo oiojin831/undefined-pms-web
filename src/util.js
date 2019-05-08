@@ -3,9 +3,11 @@ export const formatDate = date => date.toISO().substring(0, 10)
 
 export const now = DateTime.utc().setZone('Asia/Seoul')
 const tmr = now.plus({days: 1})
+const yesterday = now.minus({days: 1})
 
 export const formattedNow = now.toFormat('yyyy-MM-dd')
 export const formattedTmr = tmr.toFormat('yyyy-MM-dd')
+export const formattedYesterday = yesterday.toFormat('yyyy-MM-dd')
 
 export const fromISOtoString = dateFromCalendar =>
   DateTime.fromISO(dateFromCalendar, {zone: 'Asia/Seoul'}).toFormat(

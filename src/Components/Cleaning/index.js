@@ -37,6 +37,7 @@ export default () => {
       <div style={{marginTop: '3px'}}>
         <span onClick={() => setDate(date.minus({days: 1}))}>{'<<<<< '}</span>
         <span>{date.toFormat('yyyy-MM-dd')}</span>
+        {console.log('datae', date.toFormat('yyyy-MM-dd'))}
         <span onClick={() => setDate(date.plus({days: 1}))}>{' >>>>>'}</span>
       </div>
       <div style={{marginTop: '3px', borderBottom: '1px solid black'}}>

@@ -5,6 +5,7 @@
   "dependencies": {
     "@jbuschke/formik-antd": "^0.12.2",
     "@reach/router": "^1.2.1",
+    "algoliasearch": "^3.32.1",
     "antd": "^3.15.2",
     "firebase": "^5.9.1",
     "formik": "^1.5.2",
@@ -16,7 +17,10 @@
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "^16.8.5",
+    "react-idle-timer": "^4.2.5",
+    "react-instantsearch-dom": "^5.5.0",
     "react-scripts": "2.1.8",
+    "typeface-roboto": "0.0.54",
     "yup": "^0.27.0"
   },
   "scripts": {
@@ -34,5 +38,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
 }
