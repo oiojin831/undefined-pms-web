@@ -26,7 +26,6 @@ export default () => {
   useEffect(() => {
     fetchDeposits()
   }, [])
-  console.log('de', reservations)
   return (
     <div style={{marginTop: '50px'}}>
       {reservations.map(res => {

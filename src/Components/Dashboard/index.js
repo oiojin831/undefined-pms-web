@@ -1,22 +1,15 @@
 import React from 'react'
-import AdminDashboard from './AdminDashboard'
-import CleanerDashboard from './CleanerDashboard'
+
 import {Layout} from 'antd'
-import Auth from '../Auth'
+
+import Dashboard from './Dashboard'
 
 const {Header, Content, Footer} = Layout
+
 export default ({children, admin, user}) => {
   return (
     <Layout style={{height: '100vh'}}>
-      {user ? (
-        admin ? (
-          <AdminDashboard path="/" />
-        ) : (
-          <CleanerDashboard path="/" />
-        )
-      ) : (
-        <Auth path="/" />
-      )}
+      <Dashboard path="/" user={user} admin={admin} />
       <Layout path="/">
         <Header style={{color: 'white', textAlign: 'center'}}>
           SINSA / DMYK

@@ -19,7 +19,6 @@ export default () => {
         try {
           const docs = await query.get()
           docs.forEach(doc => {
-            console.log('doc', doc.data().checkInDate)
             docId = doc.id
           })
           actions.setSubmitting(false)

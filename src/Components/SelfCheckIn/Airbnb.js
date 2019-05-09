@@ -18,7 +18,6 @@ export default () => {
       const tempRes = snap.docs.map(doc => {
         return {...doc.data(), id: doc.id}
       })
-      console.log('tempRes', JSON.stringify(tempRes[0]))
       actions.setSubmitting(false)
       if (tempRes[0]) {
         navigate('check-in-info', {state: tempRes[0]})

@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import Home from './Components/Home'
+import {Router, navigate} from '@reach/router'
+
+import Home, {HomeGuide} from './Components/Home'
 import ReservationUpdate from './Components/ReservationUpdate'
 import UpdateRes from './Components/ReservationUpdate/UpdateRes'
 import GetReservationId from './Components/ReservationUpdate/GetReservationId'
@@ -12,7 +14,7 @@ import Calendar from './Components/Calendar'
 import Deposit from './Components/Deposit'
 import InOut from './Components/InOut'
 import NewCash from './Components/NewCash'
-import Admin from './Components/Admin'
+import LogIn, {CleanerSetting, AdminSetting} from './Components/Setting'
 import {
   SelfCheckIn,
   SCIHome,
@@ -24,8 +26,6 @@ import {
   DmykInfo,
 } from './Components/SelfCheckIn'
 
-import {Router} from '@reach/router'
-
 const NotFound = () => <div>Page not Found.</div>
 
 export default () => {
@@ -33,11 +33,12 @@ export default () => {
   const [admin, setAdmin] = useState(null)
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(async user => {
-      if (user) {
-        setUser({dispalyName: user.displayName, uid: user.uid})
-        const admin = await user.getIdTokenResult()
+    firebase.auth().onAuthStateChanged(async firebaseUser => {
+      if (firebaseUser) {
+        setUser({dispalyName: firebaseUser.displayName, uid: firebaseUser.uid})
+        const admin = await firebaseUser.getIdTokenResult()
         setAdmin(admin.claims.admin)
+        navigate('/dashboard/cleaning')
       } else {
         setUser(null)
         setAdmin(null)
@@ -49,6 +50,7 @@ export default () => {
     <Router>
       <Home path="/">
         <NotFound default />
+        <HomeGuide path="/" />
         <SelfCheckIn path="self-check-in">
           <NotFound default />
           <SCIHome path="/" />
@@ -71,13 +73,15 @@ export default () => {
           </UpdateRes>
         </ReservationUpdate>
       </Home>
-      <Dashboard path="dashboard" user={user} admin={admin}>
-        <Cleaning path="cleaning" default />
+      <Dashboard path="dashboard" admin={admin} user={user}>
+        <LogIn path="/" user={user} />
+        <Cleaning path="cleaning" />
         <Calendar path="calendar" />
         <Deposit path="deposit" />
         <InOut path="in-out" />
         <NewCash path="newCash" />
-        <Admin path="admin" />
+        <AdminSetting path="admin-setting" />
+        <CleanerSetting path="cleaner-setting" />
       </Dashboard>
     </Router>
   )

@@ -1,8 +1,12 @@
 import React from 'react'
+
 import {firebase} from '../../firebase'
 import {Button} from 'antd'
 
-export default () => {
+import CleanerSetting from './Cleaner'
+import AdminSetting from './Admin'
+
+export default ({user}) => {
   const handleClick = async () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     await firebase.auth().signInWithPopup(provider)
@@ -14,3 +18,5 @@ export default () => {
     </div>
   )
 }
+
+export {CleanerSetting, AdminSetting}

@@ -68,7 +68,6 @@ export default props => {
       .doc(props.id)
       .get()
       .then(doc => {
-        console.log('doc', doc)
         setReservation({...doc.data(), id: doc.id})
         setInTime(doc.data().checkInTime)
         setOutTime(doc.data().checkOutTime)
