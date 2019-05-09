@@ -49,7 +49,7 @@ export default () => {
     <Router>
       <Home path="/">
         <NotFound default />
-        <SelfCheckIn path="/self-check-in">
+        <SelfCheckIn path="self-check-in">
           <NotFound default />
           <SCIHome path="/" />
           <Platform path="platform">
@@ -61,7 +61,7 @@ export default () => {
             <DmykInfo path="dmyk-info" />
           </Platform>
         </SelfCheckIn>
-        <ReservationUpdate path="/reservation">
+        <ReservationUpdate path="reservation">
           <NotFound default />
           <GetReservationId path="/" />
           <UpdateRes path=":id">
@@ -71,9 +71,8 @@ export default () => {
           </UpdateRes>
         </ReservationUpdate>
       </Home>
-      <Dashboard path="/dashboard" user={user} admin={admin}>
-        <NotFound default />
-        <Cleaning path="cleaning" />
+      <Dashboard path="dashboard" user={user} admin={admin}>
+        <Cleaning path="cleaning" default />
         <Calendar path="calendar" />
         <Deposit path="deposit" />
         <InOut path="in-out" />
