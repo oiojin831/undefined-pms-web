@@ -15,9 +15,9 @@ import {
   formattedTmr,
   getDaysArray,
   fromISOtoString,
-} from '../../util.js'
-import {db} from '../../firebase.js'
-import {dmykOptions, sinsaOptions} from '../../Constants/roomName'
+} from '../../../util.js'
+import {db} from '../../../firebase.js'
+import {dmykOptions, sinsaOptions} from '../../../Constants/roomName'
 
 export default () => {
   //reading formik tutorial

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 
-import {db} from '../../firebase'
+import {db} from '../../../firebase'
 
-import {formattedNow} from '../../util'
+import {formattedNow} from '../../../util'
 
 export default () => {
   const [reservations, setReservations] = useState([])

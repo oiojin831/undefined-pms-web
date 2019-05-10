@@ -3,6 +3,11 @@ import React from 'react'
 import {Layout} from 'antd'
 
 import Dashboard from './Dashboard'
+import Cleaning from './Cleaning'
+import Calendar from './Calendar'
+import NewCash from './NewCash'
+import InOut from './InOut'
+import Deposit from './Deposit'
 
 const {Header, Content, Footer} = Layout
 
@@ -20,3 +25,5 @@ export default ({children, admin, user}) => {
     </Layout>
   )
 }
+
+export {Cleaning, Calendar, NewCash, InOut, Deposit}

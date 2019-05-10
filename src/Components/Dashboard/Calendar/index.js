@@ -8,11 +8,11 @@ import Scheduler, {SchedulerData, ViewTypes} from 'react-big-scheduler'
 import rbsConfig from './rbsConfig.js'
 import {DragDropContext} from 'react-dnd'
 
-import {db} from '../../firebase.js'
+import {db} from '../../../firebase.js'
 
-import {resources} from '../../Constants/roomName.js'
+import {resources} from '../../../Constants/roomName.js'
 
-import {platformColor, formatDate} from '../../util.js'
+import {platformColor, formatDate} from '../../../util.js'
 
 // TODO: click to see reservation number
 

@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 
-import {db} from '../../firebase'
+import {db} from '../../../firebase'
 import {
   compare,
   filterGuestHouse,
   numOfGuests,
   numOfTowels,
   now,
-} from '../../util'
+} from '../../../util'
 
 import './index.css'
 

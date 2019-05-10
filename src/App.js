@@ -8,12 +8,13 @@ import GetReservationId from './Components/ReservationUpdate/GetReservationId'
 import Itinerary from './Components/ReservationUpdate/Itinerary'
 import ExtendTime from './Components/ReservationUpdate/ExtendTime'
 import {firebase} from './firebase'
-import Dashboard from './Components/Dashboard'
-import Cleaning from './Components/Cleaning'
-import Calendar from './Components/Calendar'
-import Deposit from './Components/Deposit'
-import InOut from './Components/InOut'
-import NewCash from './Components/NewCash'
+import Dashboard, {
+  Cleaning,
+  Calendar,
+  NewCash,
+  InOut,
+  Deposit,
+} from './Components/Dashboard'
 import LogIn, {CleanerSetting, AdminSetting} from './Components/Setting'
 import {
   SelfCheckIn,
@@ -25,6 +26,8 @@ import {
   CheckInInfo,
   DmykInfo,
 } from './Components/SelfCheckIn'
+
+import './index.css'
 
 const NotFound = () => <div>Page not Found.</div>
 

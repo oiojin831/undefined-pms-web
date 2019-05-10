@@ -3,10 +3,10 @@ import {Formik} from 'formik'
 import {DatePicker, Radio, SubmitButton} from '@jbuschke/formik-antd'
 import UpdateInOut from './UpdateInOut'
 
-import {db} from '../../firebase.js'
+import {db} from '../../../firebase.js'
 
-import {formattedNow, fromISOtoString} from '../../util'
-import {resources} from '../../Constants/roomName'
+import {formattedNow, fromISOtoString} from '../../../util'
+import {resources} from '../../../Constants/roomName'
 
 export default () => {
   const [reservations, setReservations] = useState([])

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {db} from '../../firebase.js'
+import {db} from '../../../firebase.js'
 import {Formik} from 'formik'
 import {Input, InputNumber, SubmitButton} from '@jbuschke/formik-antd'
 
