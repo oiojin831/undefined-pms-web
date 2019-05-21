@@ -7,7 +7,6 @@ export default ({children}) => (
     <IdleTimer
       element={document}
       onIdle={() => {
-        alert('No action, go to home page')
         navigate('/self-check-in')
       }}
       debounce={250}

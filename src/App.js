@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Router, navigate} from '@reach/router'
+import {Router} from '@reach/router'
 
 import Home, {HomeGuide} from './Components/Home'
 import ReservationUpdate from './Components/ReservationUpdate'
@@ -41,7 +41,6 @@ export default () => {
         setUser({dispalyName: firebaseUser.displayName, uid: firebaseUser.uid})
         const admin = await firebaseUser.getIdTokenResult()
         setAdmin(admin.claims.admin)
-        navigate('/dashboard/cleaning')
       } else {
         setUser(null)
         setAdmin(null)

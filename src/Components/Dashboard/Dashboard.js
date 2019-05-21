@@ -19,7 +19,6 @@ export default ({admin, user}) => {
           />
           {admin ? (
             <Menu theme="dark" mode="inline" selectedKeys={[location.pathname]}>
-              {console.log('location', JSON.stringify(location, null, 2))}
               <Menu.Item key="/dashboard/cleaning">
                 <Link to="cleaning">
                   <Icon type="database" /> Cleaning

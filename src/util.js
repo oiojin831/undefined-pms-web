@@ -63,3 +63,7 @@ export const numOfTowels = (guests, nights) => {
     return num
   }
 }
+
+export const to12From = hours24 => {
+  return ((hours24 + 11) % 12) + 1 + (hours24 >= 12 ? 'pm' : 'am')
+}

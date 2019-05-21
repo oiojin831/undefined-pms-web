@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {db} from '../../firebase.js'
-import {Button} from 'antd'
+import {Button, Icon} from 'antd'
+import {navigate} from '@reach/router'
+import {to12From} from '../../util'
 
 const inOutTime = {
   dmyk: {in: 16, out: 10},
@@ -25,6 +27,7 @@ export default props => {
         extraFee: extraFee + timeCount * 5000,
       })
       setLoading(false)
+      navigate(`/reservation/${reservation.id}/itinerary`)
     } catch (error) {
       console.log('error', error.toString())
     }
@@ -54,11 +57,12 @@ export default props => {
           setTimeCount(timeCount + 1)
           return
         }
-      }
-      if (outTime > time.out) {
-        setOutTime(outTime - 1)
-        setTimeCount(timeCount - 1)
-        return
+      } else {
+        if (outTime > time.out) {
+          setOutTime(outTime - 1)
+          setTimeCount(timeCount - 1)
+          return
+        }
       }
     }
   }
@@ -77,41 +81,122 @@ export default props => {
 
   return reservation ? (
     <React.Fragment>
-      <div>{`CheckIn: ${reservation.checkInDate}, Time: ${inTime}`}</div>
-      <div>{`CheckOut: ${reservation.checkOutDate}, Time: ${outTime}`}</div>
+      <div
+        style={{
+          paddingTop: '10%',
+          display: 'flex',
+          justifyContent: 'space-around',
+        }}>
+        <div
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            flexBasis: '50%',
+            fontSize: '30px',
+          }}>
+          <div>Check In</div>
+          <div
+            style={{
+              fontWeight: 'bold',
+            }}>
+            {to12From(inTime)}
+          </div>
+        </div>
 
-      <div style={{marginTop: '10px'}}>
-        <span>CheckInTime: </span>
-        <span
-          onClick={() => adjustInTime('dec', 'in', reservation.guestHouseName)}>
-          minus
-        </span>
-        {inTime}
-        <span
-          onClick={() => adjustInTime('inc', 'in', reservation.guestHouseName)}>
-          plus
-        </span>
+        <div
+          style={{
+            fontSize: '55px',
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}>
+          <div
+            onClick={() =>
+              adjustInTime('dec', 'in', reservation.guestHouseName)
+            }>
+            <Icon type="minus-circle" />
+          </div>
+          <div
+            onClick={() =>
+              adjustInTime('inc', 'in', reservation.guestHouseName)
+            }>
+            <Icon type="plus-circle" />
+          </div>
+        </div>
       </div>
-      <div style={{marginTop: '10px'}}>
-        <span>CheckoutTime: </span>
-        <span
-          onClick={() =>
-            adjustInTime('dec', 'out', reservation.guestHouseName)
-          }>
-          minus
-        </span>
-        {outTime}
-        <span
-          onClick={() =>
-            adjustInTime('inc', 'out', reservation.guestHouseName)
-          }>
-          plus
-        </span>
+      <div
+        style={{
+          display: 'flex',
+          paddingTop: '5%',
+          justifyContent: 'space-between',
+        }}>
+        <div
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            flexBasis: '50%',
+            fontSize: '30px',
+          }}>
+          <div>Check Out</div>
+          <div
+            style={{
+              fontWeight: 'bold',
+            }}>
+            {to12From(outTime)}
+          </div>
+        </div>
+        <div
+          style={{
+            fontSize: '55px',
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}>
+          <div
+            onClick={() =>
+              adjustInTime('dec', 'out', reservation.guestHouseName)
+            }>
+            <Icon type="minus-circle" />
+          </div>
+          <div
+            onClick={() =>
+              adjustInTime('inc', 'out', reservation.guestHouseName)
+            }>
+            <Icon type="plus-circle" />
+          </div>
+        </div>
       </div>
-      <div>{`5000won X ${timeCount}hours ${
-        extraFee ? `+ ${extraFee}won(previous)` : ''
-      } = ${5000 * timeCount + extraFee}won`}</div>
-      {loading ? <div>loading</div> : <Button onClick={payHandler}>PAY</Button>}
+      <div
+        style={{
+          paddingTop: '5%',
+          paddingRight: '5%',
+          fontSize: '30px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-end',
+        }}>
+        <div>Total Cost:</div>
+        <div>{`5000won X ${timeCount}hours ${
+          extraFee ? `+ ${extraFee}won(previous)` : ''
+        }`}</div>
+        <div>{`= ${5000 * timeCount + extraFee}won`}</div>
+        {loading ? (
+          <div>loading</div>
+        ) : (
+          <div
+            style={{
+              paddingTop: '5%',
+            }}>
+            <Button size="large" onClick={payHandler}>
+              PAY
+            </Button>
+          </div>
+        )}
+      </div>
     </React.Fragment>
   ) : (
     <div> loading</div>

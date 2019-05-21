@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import uniqBy from 'lodash.uniqby'
 
 import {db} from '../../../firebase'
 import {
@@ -46,54 +47,46 @@ export default () => {
         <span onClick={() => setFilter('dmyk')}>--DMYK</span>
       </div>
 
-      {reservations
-        .sort(compare)
-        .filter(res => filterGuestHouse(res.guestHouseName, filter))
-        .filter(res => res.checkOutDate === date.toFormat('yyyy-MM-dd'))
-        .map(outRes => {
-          // reservation of tmr with same room
-          // list is based on out but the data except out time are in data
-          const inSameRoomRes = reservations
-            .filter(allRes => allRes.roomNumber === outRes.roomNumber)
-            .filter(
-              sameRoom => sameRoom.checkInDate === date.toFormat('yyyy-MM-dd'),
-            )
-            .filter(Boolean)[0]
+      {uniqBy(
+        reservations
+          .sort(compare)
+          .filter(res => filterGuestHouse(res.guestHouseName, filter))
+          .filter(
+            res =>
+              res.checkOutDate === date.toFormat('yyyy-MM-dd') ||
+              res.checkInDate === date.toFormat('yyyy-MM-dd'),
+          ),
+        'roomNumber',
+      ).map(outRes => {
+        if (outRes) {
+          const guests = numOfGuests(parseInt(outRes.guests))
+          const cleaningMemo = outRes.cleaningMemo
 
-          if (inSameRoomRes) {
-            const guests = numOfGuests(parseInt(inSameRoomRes.guests))
-            const cleaningMemo = inSameRoomRes.cleaningMemo
-
-            return (
-              <div key={outRes.reservationCode} className="box">
-                <h1>{outRes.roomNumber}</h1>
-                <div>{`Check Out: ${outRes.checkOutTime}`}</div>
-                <div>{`Check In: ${inSameRoomRes.checkInTime}`}</div>
-                <div>{`# of guests: ${guests}`}</div>
-                <div>{`towels: ${numOfTowels(
-                  guests,
-                  inSameRoomRes.nights,
-                )}`}</div>
-                <div>{`*${inSameRoomRes.platform} - ${
-                  inSameRoomRes.reservationCode
-                }*`}</div>
-                {cleaningMemo && (
-                  <div style={{color: 'red'}}>
-                    {`Cleaning Memo: ${cleaningMemo}`}
-                  </div>
-                )}
-              </div>
-            )
-          } else {
-            return (
-              <div key={outRes.reservationCode} className="box">
-                <h1>{outRes.roomNumber}</h1>
-                <div>{`Check Out: ${outRes.checkOutTime}`}</div>
-                <div>{'N/A'}</div>
-              </div>
-            )
-          }
-        })}
+          return (
+            <div key={outRes.reservationCode} className="box">
+              <h1>{outRes.roomNumber}</h1>
+              <div>{`Check Out: ${outRes.checkOutTime}`}</div>
+              <div>{`Check In: ${outRes.checkInTime}`}</div>
+              <div>{`# of guests: ${guests}`}</div>
+              <div>{`towels: ${numOfTowels(guests, outRes.nights)}`}</div>
+              <div>{`*${outRes.platform} - ${outRes.reservationCode}*`}</div>
+              {cleaningMemo && (
+                <div style={{color: 'red'}}>
+                  {`Cleaning Memo: ${cleaningMemo}`}
+                </div>
+              )}
+            </div>
+          )
+        } else {
+          return (
+            <div key={outRes.reservationCode} className="box">
+              <h1>{outRes.roomNumber}</h1>
+              <div>{`Check Out: ${outRes.checkOutTime}`}</div>
+              <div>{'N/A'}</div>
+            </div>
+          )
+        }
+      })}
     </div>
   )
 }

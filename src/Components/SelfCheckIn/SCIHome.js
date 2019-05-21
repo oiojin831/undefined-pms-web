@@ -5,8 +5,8 @@ export default () => (
   <div
     style={{
       color: 'white',
+      height: '50vh',
       fontSize: '40px',
-      height: '60vh',
       display: 'flex',
       alignItems: 'start',
       justifyContent: 'flex-end',

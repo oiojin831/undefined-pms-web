@@ -22,7 +22,7 @@ export default () => {
       if (tempRes[0]) {
         navigate('check-in-info', {state: tempRes[0]})
       } else {
-        setNoReservation('There is no matching reservagtion')
+        setNoReservation('There is no matching reservation')
       }
     } catch (error) {
       console.log('error', error.toString())

@@ -13,8 +13,14 @@ export default ({user}) => {
   }
   return (
     <div>
-      <div>Please sign in</div>
-      <Button onClick={handleClick}>Sign in with Google</Button>
+      {user ? (
+        <div styles={{padding: '30px'}}>
+          <div>Please sign in</div>
+          <Button onClick={handleClick}>Sign in with Google</Button>
+        </div>
+      ) : (
+        <div>dashboard</div>
+      )}
     </div>
   )
 }
