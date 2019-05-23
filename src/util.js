@@ -67,3 +67,21 @@ export const numOfTowels = (guests, nights) => {
 export const to12From = hours24 => {
   return ((hours24 + 11) % 12) + 1 + (hours24 >= 12 ? 'pm' : 'am')
 }
+
+export const cleaningReducer = today => (cleaning, value, index) => {
+  const roomNumber = value.roomNumber
+  cleaning[roomNumber] = cleaning[roomNumber] || value
+  if (today === value.checkInDate) {
+    cleaning[roomNumber] = {
+      ...cleaning[roomNumber],
+      checkInTime: value.checkInTime,
+      cleaningMemo: value.cleaningMemo,
+    }
+  } else if (today === value.checkOutDate) {
+    cleaning[roomNumber] = {
+      ...cleaning[roomNumber],
+      checkOutTime: value.checkOutTime,
+    }
+  }
+  return cleaning
+}

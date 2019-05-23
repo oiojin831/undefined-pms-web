@@ -1,9 +1,9 @@
 import React from 'react'
 
 const passCode = {
-  dmyk101: '0424#',
+  dmyk101: '0423#',
   dmyk102: '9849#',
-  dmyk103: '8103#',
+  dmyk103: '3184#',
   dmyk104: '1169#',
   dmyk201: '1985#',
   dmyk202: '7820#',

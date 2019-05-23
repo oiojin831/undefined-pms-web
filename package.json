@@ -11,6 +11,7 @@
     "formik": "^1.5.2",
     "instantsearch.css": "^7.3.1",
     "lodash.get": "4.4.2",
+    "lodash.remove": "^4.7.0",
     "lodash.uniqby": "^4.7.0",
     "luxon": "^1.12.1",
     "moment": "^2.24.0",

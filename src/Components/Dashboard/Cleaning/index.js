@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import uniqBy from 'lodash.uniqby'
 
 import {db} from '../../../firebase'
 import {
@@ -8,6 +7,7 @@ import {
   numOfGuests,
   numOfTowels,
   now,
+  cleaningReducer,
 } from '../../../util'
 
 import './index.css'
@@ -47,7 +47,7 @@ export default () => {
         <span onClick={() => setFilter('dmyk')}>--DMYK</span>
       </div>
 
-      {uniqBy(
+      {Object.values(
         reservations
           .sort(compare)
           .filter(res => filterGuestHouse(res.guestHouseName, filter))
@@ -55,8 +55,8 @@ export default () => {
             res =>
               res.checkOutDate === date.toFormat('yyyy-MM-dd') ||
               res.checkInDate === date.toFormat('yyyy-MM-dd'),
-          ),
-        'roomNumber',
+          )
+          .reduce(cleaningReducer(date.toFormat('yyyy-MM-dd')), {}),
       ).map(outRes => {
         if (outRes) {
           const guests = numOfGuests(parseInt(outRes.guests))
