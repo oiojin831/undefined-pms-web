@@ -1,48 +1,56 @@
-import React, {Component} from 'react'
-import 'moment/locale/ko'
-import {DateTime} from 'luxon'
-import './index.css'
-import 'react-big-scheduler/lib/css/style.css'
-import HTML5Backend from 'react-dnd-html5-backend'
-import Scheduler, {SchedulerData, ViewTypes} from 'react-big-scheduler'
-import rbsConfig from './rbsConfig.js'
-import {DragDropContext} from 'react-dnd'
+import React, { Component } from "react";
+import "moment/locale/ko";
+import { DateTime } from "luxon";
+import "./index.css";
+import "react-big-scheduler/lib/css/style.css";
+import HTML5Backend from "react-dnd-html5-backend";
+import Scheduler, { SchedulerData, ViewTypes } from "react-big-scheduler";
+import rbsConfig from "./rbsConfig.js";
+import { DragDropContext } from "react-dnd";
 
-import {db} from '../../../firebase.js'
+import { db } from "../../../firebase.js";
 
-import {resources} from '../../../Constants/roomName.js'
+import { resources } from "../../../Constants/roomName.js";
 
-import {platformColor, formatDate} from '../../../util.js'
+import { platformColor, formatDate } from "../../../util.js";
 
 // TODO: click to see reservation number
 
 class Basic extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     let schedulerData = new SchedulerData(
-      formatDate(DateTime.local().setZone('Asia/Seoul')),
+      formatDate(DateTime.local().setZone("Asia/Seoul")),
       ViewTypes.Month,
       false,
       false,
-      rbsConfig,
-    )
-    schedulerData.setResources(resources)
-    schedulerData.setEvents([])
+      rbsConfig
+    );
+    schedulerData.setResources(resources);
+    schedulerData.setEvents([]);
     this.state = {
       viewModel: schedulerData,
       loading: false,
       eventsData: [],
-      date: DateTime.local().setZone('Asia/Seoul'),
-    }
+      date: DateTime.local().setZone("Asia/Seoul")
+    };
   }
 
   async componentDidMount() {
-    this.setState({loading: true})
-    const eventsData = []
-    db.collection('reservations')
-      .where('checkInDate', '>=', formatDate(this.state.date.minus({days: 40})))
-      .where('checkInDate', '<=', formatDate(this.state.date.plus({days: 90})))
+    this.setState({ loading: true });
+    const eventsData = [];
+    db.collection("reservations")
+      .where(
+        "checkInDate",
+        ">=",
+        formatDate(this.state.date.minus({ days: 40 }))
+      )
+      .where(
+        "checkInDate",
+        "<=",
+        formatDate(this.state.date.plus({ days: 90 }))
+      )
       .get()
       .then(snap => {
         snap.forEach(doc => {
@@ -54,8 +62,8 @@ class Basic extends Component {
             roomNumber,
             phoneNumber,
             platform,
-            reservationCode,
-          } = doc.data()
+            reservationCode
+          } = doc.data();
           eventsData.push({
             id: doc.id,
             start: checkInDate,
@@ -63,20 +71,20 @@ class Basic extends Component {
             resourceId: roomNumber,
             title: `${guestName}: ${phoneNumber}, ${reservationCode}`,
             nights: nights,
-            bgColor: platformColor[platform],
-          })
-        })
-        this.setState({eventsData: eventsData, loading: false})
-      })
+            bgColor: platformColor[platform]
+          });
+        });
+        this.setState({ eventsData: eventsData, loading: false });
+      });
   }
   render() {
-    const {viewModel} = this.state
+    const { viewModel } = this.state;
     if (this.state.eventsData) {
-      viewModel.setEvents(this.state.eventsData)
+      viewModel.setEvents(this.state.eventsData);
     }
     return (
-      <div style={{marginTop: '50px'}}>
-        <div style={{fontSize: '8px'}}>
+      <div style={{ marginTop: "50px" }}>
+        <div style={{ fontSize: "8px" }}>
           <Scheduler
             schedulerData={viewModel}
             prevClick={this.prevClick}
@@ -86,42 +94,42 @@ class Basic extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 
   prevClick = schedulerData => {
-    schedulerData.prev()
+    schedulerData.prev();
     this.setState({
-      viewModel: schedulerData,
-    })
-  }
+      viewModel: schedulerData
+    });
+  };
 
   nextClick = schedulerData => {
-    schedulerData.next()
+    schedulerData.next();
     this.setState({
-      viewModel: schedulerData,
-    })
-  }
+      viewModel: schedulerData
+    });
+  };
 
   onViewChange = (schedulerData, view) => {
     schedulerData.setViewType(
       view.viewType,
       view.showAgenda,
-      view.isEventPerspective,
-    )
+      view.isEventPerspective
+    );
     //schedulerData.setEvents(events)
     this.setState({
-      viewModel: schedulerData,
-    })
-  }
+      viewModel: schedulerData
+    });
+  };
 
   onSelectDate = (schedulerData, date) => {
-    schedulerData.setDate(date)
+    schedulerData.setDate(date);
     //schedulerData.setEvents(events)
     this.setState({
-      viewModel: schedulerData,
-    })
-  }
+      viewModel: schedulerData
+    });
+  };
 }
 
-export default DragDropContext(HTML5Backend)(Basic)
+export default DragDropContext(HTML5Backend)(Basic);
