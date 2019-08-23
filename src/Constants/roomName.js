@@ -52,84 +52,92 @@ const resources = [
     name: "s101"
   },
   {
-    id: "jhonor102a",
-    name: "j102a"
+    id: "jhonor101A",
+    name: "j101A"
   },
   {
-    id: "jhonor102b",
-    name: "j102b"
+    id: "jhonor101B",
+    name: "j101B"
   },
   {
-    id: "jhonor102c",
-    name: "j102c"
+    id: "jhonor101C",
+    name: "j101C"
   },
   {
-    id: "jhonor102d",
-    name: "j102d"
+    id: "jhonor101D",
+    name: "j101D"
   },
   {
-    id: "jhonor201a",
-    name: "j201a"
+    id: "jhonor201A",
+    name: "j201A"
   },
   {
-    id: "jhonor201b",
-    name: "j201b"
+    id: "jhonor201B",
+    name: "j201B"
   },
   {
-    id: "jhonor201c",
-    name: "j201c"
+    id: "jhonor201C",
+    name: "j201C"
   },
   {
-    id: "jhonor201d",
-    name: "j201d"
+    id: "jhonor201D",
+    name: "j201D"
   },
   {
-    id: "jhonor202a",
-    name: "j202a"
+    id: "jhonor202A",
+    name: "j202A"
   },
   {
-    id: "jhonor202b",
-    name: "j202b"
+    id: "jhonor202B",
+    name: "j202B"
   },
   {
-    id: "jhonor202c",
-    name: "j202c"
+    id: "jhonor202C",
+    name: "j202C"
   },
   {
-    id: "jhonor202d",
-    name: "j202d"
+    id: "jhonor202D",
+    name: "j202D"
   },
   {
-    id: "jhonor301a",
-    name: "j301a"
+    id: "jhonor202X",
+    name: "j202X"
   },
   {
-    id: "jhonor301b",
-    name: "j301b"
+    id: "jhonor301A",
+    name: "j301A"
   },
   {
-    id: "jhonor301c",
-    name: "j301c"
+    id: "jhonor301B",
+    name: "j301B"
   },
   {
-    id: "jhonor301d",
-    name: "j301d"
+    id: "jhonor301C",
+    name: "j301C"
   },
   {
-    id: "jhonor302a",
-    name: "j302a"
+    id: "jhonor301D",
+    name: "j301D"
   },
   {
-    id: "jhonor302b",
-    name: "j302b"
+    id: "jhonor302A",
+    name: "j302A"
   },
   {
-    id: "jhonor302c",
-    name: "j302c"
+    id: "jhonor302B",
+    name: "j302B"
   },
   {
-    id: "jhonor302d",
-    name: "j302d"
+    id: "jhonor302C",
+    name: "j302C"
+  },
+  {
+    id: "jhonor302D",
+    name: "j302D"
+  },
+  {
+    id: "jhonor302X",
+    name: "j302X"
   }
 ];
 
@@ -151,25 +159,27 @@ const sinsaOptions = [
   { label: "sinsaB03", value: "sinsaB03" }
 ];
 const jhonorOptions = [
-  { label: "jhonor102a", value: "jhonor102a" },
-  { label: "jhonor102b", value: "jhonor102b" },
-  { label: "jhonor102c", value: "jhonor102c" },
-  { label: "jhonor102d", value: "jhonor102d" },
-  { label: "jhonor201a", value: "jhonor201a" },
-  { label: "jhonor201b", value: "jhonor201b" },
-  { label: "jhonor201c", value: "jhonor201c" },
-  { label: "jhonor201d", value: "jhonor201d" },
-  { label: "jhonor202a", value: "jhonor202a" },
-  { label: "jhonor202b", value: "jhonor202b" },
-  { label: "jhonor202c", value: "jhonor202c" },
-  { label: "jhonor202d", value: "jhonor202d" },
-  { label: "jhonor301a", value: "jhonor301a" },
-  { label: "jhonor301b", value: "jhonor301b" },
-  { label: "jhonor301c", value: "jhonor301c" },
-  { label: "jhonor301d", value: "jhonor301d" },
-  { label: "jhonor302a", value: "jhonor302a" },
-  { label: "jhonor302b", value: "jhonor302b" },
-  { label: "jhonor302c", value: "jhonor302c" },
-  { label: "jhonor302d", value: "jhonor302d" }
+  { label: "jhonor102A", value: "jhonor102A" },
+  { label: "jhonor102B", value: "jhonor102B" },
+  { label: "jhonor102C", value: "jhonor102C" },
+  { label: "jhonor102D", value: "jhonor102D" },
+  { label: "jhonor201A", value: "jhonor201A" },
+  { label: "jhonor201B", value: "jhonor201B" },
+  { label: "jhonor201C", value: "jhonor201C" },
+  { label: "jhonor201D", value: "jhonor201D" },
+  { label: "jhonor202A", value: "jhonor202A" },
+  { label: "jhonor202B", value: "jhonor202B" },
+  { label: "jhonor202C", value: "jhonor202C" },
+  { label: "jhonor202D", value: "jhonor202D" },
+  { label: "jhonor202X", value: "jhonor202X" },
+  { label: "jhonor301A", value: "jhonor301A" },
+  { label: "jhonor301B", value: "jhonor301B" },
+  { label: "jhonor301C", value: "jhonor301C" },
+  { label: "jhonor301D", value: "jhonor301D" },
+  { label: "jhonor302A", value: "jhonor302A" },
+  { label: "jhonor302B", value: "jhonor302B" },
+  { label: "jhonor302C", value: "jhonor302C" },
+  { label: "jhonor302D", value: "jhonor302D" },
+  { label: "jhonor302X", value: "jhonor302X" }
 ];
 export { resources, dmykOptions, sinsaOptions, jhonorOptions };
