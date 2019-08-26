@@ -1,87 +1,89 @@
-import {DateTime} from 'luxon'
-export const formatDate = date => date.toISO().substring(0, 10)
+import { DateTime } from "luxon";
+export const formatDate = date => date.toISO().substring(0, 10);
 
-export const now = DateTime.utc().setZone('Asia/Seoul')
-const tmr = now.plus({days: 1})
-const yesterday = now.minus({days: 1})
+export const now = DateTime.utc().setZone("Asia/Seoul");
+const tmr = now.plus({ days: 1 });
+const yesterday = now.minus({ days: 1 });
 
-export const formattedNow = now.toFormat('yyyy-MM-dd')
-export const formattedTmr = tmr.toFormat('yyyy-MM-dd')
-export const formattedYesterday = yesterday.toFormat('yyyy-MM-dd')
+export const formattedNow = now.toFormat("yyyy-MM-dd");
+export const formattedTmr = tmr.toFormat("yyyy-MM-dd");
+export const formattedYesterday = yesterday.toFormat("yyyy-MM-dd");
 
 export const fromISOtoString = dateFromCalendar =>
-  DateTime.fromISO(dateFromCalendar, {zone: 'Asia/Seoul'}).toFormat(
-    'yyyy-MM-dd',
-  )
+  DateTime.fromISO(dateFromCalendar, { zone: "Asia/Seoul" }).toFormat(
+    "yyyy-MM-dd"
+  );
 
 export const compare = (a, b) => {
-  if (a.roomNumber < b.roomNumber) return -1
-  if (a.roomNumber > b.roomNumber) return 1
-  return 0
-}
+  if (a.roomNumber < b.roomNumber) return -1;
+  if (a.roomNumber > b.roomNumber) return 1;
+  return 0;
+};
 
 export const compareCheckInDate = (a, b) => {
-  if (a.checkInDate < b.checkInDate) return -1
-  if (a.checkInDate > b.checkInDate) return 1
-  return 0
-}
+  if (a.checkInDate < b.checkInDate) return -1;
+  if (a.checkInDate > b.checkInDate) return 1;
+  return 0;
+};
 
 export const platformColor = {
-  airbnb: '#ed3b85',
-  expedia: '#3b53ed',
-  agoda: '#873f92',
-  ctrip: '#baed3b',
-  cash: '#37d664',
-}
+  airbnb: "#ed3b85",
+  expedia: "#3b53ed",
+  agoda: "#873f92",
+  ctrip: "#baed3b",
+  cash: "#37d664"
+};
 
 export const getDaysArray = (start, end) => {
-  const arr = []
-  const dt = start
+  const arr = [];
+  const dt = start;
   for (dt; dt <= end; dt.setDate(dt.getDate() + 1)) {
-    arr.push(new Date(dt))
+    arr.push(new Date(dt));
   }
-  return arr.map(v => v.toISOString().slice(0, 10))
-}
+  return arr.map(v => v.toISOString().slice(0, 10));
+};
 
 export const filterGuestHouse = (guestHouseName, filter) => {
   if (filter) {
-    return filter === guestHouseName
+    return filter === guestHouseName;
   }
   // empty string will return everything
-  return true
-}
+  return true;
+};
 
 export const numOfGuests = guests => {
-  return guests === 1 ? 2 : guests
-}
+  return guests === 1 ? 2 : guests;
+};
 
 export const numOfTowels = (guests, nights) => {
-  const num = Math.round(guests * nights * 1.5)
+  const num = Math.round(guests * nights * 1.5);
   if (num > 10) {
-    return 10
+    return 10;
   } else {
-    return num
+    return num;
   }
-}
+};
 
 export const to12From = hours24 => {
-  return ((hours24 + 11) % 12) + 1 + (hours24 >= 12 ? 'pm' : 'am')
-}
+  return ((hours24 + 11) % 12) + 1 + (hours24 >= 12 ? "pm" : "am");
+};
 
 export const cleaningReducer = today => (cleaning, value, index) => {
-  const roomNumber = value.roomNumber
-  cleaning[roomNumber] = cleaning[roomNumber] || value
+  const roomNumber = value.roomNumber;
+  cleaning[roomNumber] = cleaning[roomNumber] || value;
   if (today === value.checkInDate) {
     cleaning[roomNumber] = {
       ...cleaning[roomNumber],
+      guests: value.guests,
+      nights: value.nights,
       checkInTime: value.checkInTime,
-      cleaningMemo: value.cleaningMemo,
-    }
+      cleaningMemo: value.cleaningMemo
+    };
   } else if (today === value.checkOutDate) {
     cleaning[roomNumber] = {
       ...cleaning[roomNumber],
-      checkOutTime: value.checkOutTime,
-    }
+      checkOutTime: value.checkOutTime
+    };
   }
-  return cleaning
-}
+  return cleaning;
+};

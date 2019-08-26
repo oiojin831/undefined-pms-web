@@ -33,7 +33,7 @@ const passCode = {
     passCode: "8265#",
     wifi: "dmyk2-4 / dmykdmyk24 or dmyk2-3 / dmykdmyk23"
   },
-  dmyk300: { passCode: "181222*", wifi: "dmyk / checkout10" }
+  dmyk300: { passCode: "121210*", wifi: "dmyk / checkout10" }
 };
 
 export default props => {
