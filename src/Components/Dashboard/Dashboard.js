@@ -1,20 +1,20 @@
-import React from 'react'
-import {Link, Location} from '@reach/router'
-import {Layout, Menu, Icon} from 'antd'
+import React from "react";
+import { Link, Location } from "@reach/router";
+import { Layout, Menu, Icon } from "antd";
 
-const {Sider} = Layout
+const { Sider } = Layout;
 
-export default ({admin, user}) => {
+export default ({ admin, user }) => {
   return (
     <Location>
-      {({location}) => (
+      {({ location }) => (
         <Sider breakpoint="lg" collapsedWidth="0">
           <div
             className="logo"
             style={{
-              height: '32px',
-              background: 'rgba(255,255,255,.2)',
-              margin: '16px',
+              height: "32px",
+              background: "rgba(255,255,255,.2)",
+              margin: "16px"
             }}
           />
           {admin ? (
@@ -27,6 +27,16 @@ export default ({admin, user}) => {
               <Menu.Item key="/dashboard/calendar">
                 <Link to="calendar">
                   <Icon type="table" /> Calendar
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="/dashboard/payment">
+                <Link to="payment">
+                  <Icon type="info" /> CheckInOut
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="/dashboard/statistic">
+                <Link to="statistic">
+                  <Icon type="bar-chart" /> Statistic
                 </Link>
               </Menu.Item>
               <Menu.Item key="/dashboard/newCash">
@@ -51,7 +61,7 @@ export default ({admin, user}) => {
               </Menu.Item>
             </Menu>
           ) : user ? (
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+            <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
               <Menu.Item key="1">
                 <Link to="cleaning">
                   <Icon type="database" /> Cleaning
@@ -67,5 +77,5 @@ export default ({admin, user}) => {
         </Sider>
       )}
     </Location>
-  )
-}
+  );
+};

@@ -1,21 +1,23 @@
-import React, {useState, useEffect} from 'react'
-import {Router} from '@reach/router'
+import React, { useState, useEffect } from "react";
+import { Router } from "@reach/router";
 
-import Home, {HomeGuide} from './Components/Home'
-import ReservationUpdate from './Components/ReservationUpdate'
-import UpdateRes from './Components/ReservationUpdate/UpdateRes'
-import GetReservationId from './Components/ReservationUpdate/GetReservationId'
-import Itinerary from './Components/ReservationUpdate/Itinerary'
-import ExtendTime from './Components/ReservationUpdate/ExtendTime'
-import {firebase} from './firebase'
+import Home, { HomeGuide } from "./Components/Home";
+import ReservationUpdate from "./Components/ReservationUpdate";
+import UpdateRes from "./Components/ReservationUpdate/UpdateRes";
+import GetReservationId from "./Components/ReservationUpdate/GetReservationId";
+import Itinerary from "./Components/ReservationUpdate/Itinerary";
+import ExtendTime from "./Components/ReservationUpdate/ExtendTime";
+import { firebase } from "./firebase";
 import Dashboard, {
   Cleaning,
   Calendar,
   NewCash,
   InOut,
   Deposit,
-} from './Components/Dashboard'
-import LogIn, {CleanerSetting, AdminSetting} from './Components/Setting'
+  Statistic,
+  Payment
+} from "./Components/Dashboard";
+import LogIn, { CleanerSetting, AdminSetting } from "./Components/Setting";
 import {
   SelfCheckIn,
   SCIHome,
@@ -24,29 +26,32 @@ import {
   Airbnb,
   Others,
   CheckInInfo,
-  DmykInfo,
-} from './Components/SelfCheckIn'
+  DmykInfo
+} from "./Components/SelfCheckIn";
 
-import './index.css'
+import "./index.css";
 
-const NotFound = () => <div>Page not Found.</div>
+const NotFound = () => <div>Page not Found.</div>;
 
 export default () => {
-  const [user, setUser] = useState(null)
-  const [admin, setAdmin] = useState(null)
+  const [user, setUser] = useState(null);
+  const [admin, setAdmin] = useState(null);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async firebaseUser => {
       if (firebaseUser) {
-        setUser({dispalyName: firebaseUser.displayName, uid: firebaseUser.uid})
-        const admin = await firebaseUser.getIdTokenResult()
-        setAdmin(admin.claims.admin)
+        setUser({
+          dispalyName: firebaseUser.displayName,
+          uid: firebaseUser.uid
+        });
+        const admin = await firebaseUser.getIdTokenResult();
+        setAdmin(admin.claims.admin);
       } else {
-        setUser(null)
-        setAdmin(null)
+        setUser(null);
+        setAdmin(null);
       }
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <Router>
@@ -80,11 +85,13 @@ export default () => {
         <Cleaning path="cleaning" />
         <Calendar path="calendar" />
         <Deposit path="deposit" />
+        <Statistic path="statistic" />
+        <Payment path="payment" />
         <InOut path="in-out" />
         <NewCash path="newCash" />
         <AdminSetting path="admin-setting" />
         <CleanerSetting path="cleaner-setting" />
       </Dashboard>
     </Router>
-  )
-}
+  );
+};

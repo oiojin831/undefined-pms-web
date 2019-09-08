@@ -8,22 +8,20 @@ import Calendar from "./Calendar";
 import NewCash from "./NewCash";
 import InOut from "./InOut";
 import Deposit from "./Deposit";
+import Statistic from "./Statistic";
+import Payment from "./Payment";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 export default ({ children, admin, user }) => {
   return (
     <Layout style={{ height: "100vh" }}>
       <Dashboard path="/" user={user} admin={admin} />
       <Layout path="/">
-        <Header style={{ color: "white", textAlign: "center" }}>
-          SINSA / DMYK / JHONOR
-        </Header>
         <Content style={{ overflow: "auto" }}>{children}</Content>
-        <Footer style={{ textAlign: "center" }}>STAY with UNDEFINEDIST</Footer>
       </Layout>
     </Layout>
   );
 };
 
-export { Cleaning, Calendar, NewCash, InOut, Deposit };
+export { Cleaning, Calendar, NewCash, InOut, Deposit, Statistic, Payment };

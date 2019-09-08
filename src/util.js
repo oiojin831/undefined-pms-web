@@ -29,6 +29,7 @@ export const compareCheckInDate = (a, b) => {
 export const platformColor = {
   airbnb: "#ed3b85",
   expedia: "#3b53ed",
+  booking: "#003366",
   agoda: "#873f92",
   ctrip: "#baed3b",
   cash: "#37d664"
@@ -49,6 +50,41 @@ export const filterGuestHouse = (guestHouseName, filter) => {
   }
   // empty string will return everything
   return true;
+};
+
+export const filterCheckInOut = (
+  today,
+  checkInDate,
+  checkOutDate,
+  paid,
+  platform,
+  option
+) => {
+  console.log(paid);
+  if (option === "notPaid") {
+    if (platform !== "booking") {
+      return false;
+    }
+    return paid === undefined ? true : paid === null ? true : !paid;
+  }
+  if (option === "checkIn") {
+    return checkInDate === today;
+  } else if (option === "checkOut") {
+    return checkOutDate === today;
+  }
+  return true;
+};
+
+export const paidPriceSelector = (platform, price, paidPrice) => {
+  if (platform === "airbnb") {
+    return "Airbnb";
+  } else if (platform === "agoda") {
+    // TODO: add agoda not prepaid logic
+    return "Agoda prepaid";
+  } else if (paidPrice) {
+    return paidPrice;
+  }
+  return `${price}원`;
 };
 
 export const numOfGuests = guests => {

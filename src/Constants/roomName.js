@@ -100,10 +100,6 @@ const resources = [
     name: "j202D"
   },
   {
-    id: "jhonor202X",
-    name: "j202X"
-  },
-  {
     id: "jhonor301A",
     name: "j301A"
   },
@@ -120,6 +116,10 @@ const resources = [
     name: "j301D"
   },
   {
+    id: "jhonor302X",
+    name: "j302X"
+  },
+  {
     id: "jhonor302A",
     name: "j302A"
   },
@@ -134,10 +134,6 @@ const resources = [
   {
     id: "jhonor302D",
     name: "j302D"
-  },
-  {
-    id: "jhonor302X",
-    name: "j302X"
   }
 ];
 
@@ -159,10 +155,10 @@ const sinsaOptions = [
   { label: "sinsaB03", value: "sinsaB03" }
 ];
 const jhonorOptions = [
-  { label: "jhonor102A", value: "jhonor102A" },
-  { label: "jhonor102B", value: "jhonor102B" },
-  { label: "jhonor102C", value: "jhonor102C" },
-  { label: "jhonor102D", value: "jhonor102D" },
+  { label: "jhonor101A", value: "jhonor101A" },
+  { label: "jhonor101B", value: "jhonor101B" },
+  { label: "jhonor101C", value: "jhonor101C" },
+  { label: "jhonor101D", value: "jhonor101D" },
   { label: "jhonor201A", value: "jhonor201A" },
   { label: "jhonor201B", value: "jhonor201B" },
   { label: "jhonor201C", value: "jhonor201C" },
@@ -171,15 +167,14 @@ const jhonorOptions = [
   { label: "jhonor202B", value: "jhonor202B" },
   { label: "jhonor202C", value: "jhonor202C" },
   { label: "jhonor202D", value: "jhonor202D" },
-  { label: "jhonor202X", value: "jhonor202X" },
   { label: "jhonor301A", value: "jhonor301A" },
   { label: "jhonor301B", value: "jhonor301B" },
   { label: "jhonor301C", value: "jhonor301C" },
   { label: "jhonor301D", value: "jhonor301D" },
+  { label: "jhonor302X", value: "jhonor302X" },
   { label: "jhonor302A", value: "jhonor302A" },
   { label: "jhonor302B", value: "jhonor302B" },
   { label: "jhonor302C", value: "jhonor302C" },
-  { label: "jhonor302D", value: "jhonor302D" },
-  { label: "jhonor302X", value: "jhonor302X" }
+  { label: "jhonor302D", value: "jhonor302D" }
 ];
 export { resources, dmykOptions, sinsaOptions, jhonorOptions };
