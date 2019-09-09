@@ -62,7 +62,11 @@ export const filterCheckInOut = (
 ) => {
   console.log(paid);
   if (option === "notPaid") {
-    if (platform !== "booking") {
+    if (
+      platform === "agoda" ||
+      platform === "airbnb" ||
+      platform === "expedia"
+    ) {
       return false;
     }
     return paid === undefined ? true : paid === null ? true : !paid;
