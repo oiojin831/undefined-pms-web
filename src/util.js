@@ -20,6 +20,62 @@ export const compare = (a, b) => {
   return 0;
 };
 
+export const sortByPlatform = (flag, sort, a, b) => {
+  if (sort === "platform") {
+    if (flag === "asc") {
+      if (a.platform < b.platform) return -1;
+      if (a.platform > b.platform) return 1;
+    }
+    if (flag === "desc") {
+      if (a.platform < b.platform) return 1;
+      if (a.platform > b.platform) return -1;
+    }
+  }
+  return 0;
+};
+
+export const sortByRoomNumber = (flag, sort, a, b) => {
+  if (sort === "roomNumber") {
+    if (flag === "asc") {
+      if (a.roomNumber < b.roomNumber) return -1;
+      if (a.roomNumber > b.roomNumber) return 1;
+    }
+    if (flag === "desc") {
+      if (a.roomNumber < b.roomNumber) return 1;
+      if (a.roomNumber > b.roomNumber) return -1;
+    }
+  }
+  return 0;
+};
+
+export const sortByCheckIn = (flag, sort, a, b) => {
+  if (sort === "checkIn") {
+    if (flag === "asc") {
+      if (a.checkInDate < b.checkInDate) return -1;
+      if (a.checkInDate > b.checkInDate) return 1;
+    }
+    if (flag === "desc") {
+      if (a.checkInDate < b.checkInDate) return 1;
+      if (a.checkInDate > b.checkInDate) return -1;
+    }
+  }
+  return 0;
+};
+
+export const sortByCheckOut = (flag, sort, a, b) => {
+  if (sort === "checkOut") {
+    if (flag === "asc") {
+      if (a.checkOutDate < b.checkOutDate) return -1;
+      if (a.checkOutDate > b.checkOutDate) return 1;
+    }
+    if (flag === "desc") {
+      if (a.checkOutDate < b.checkOutDate) return 1;
+      if (a.checkOutDate > b.checkOutDate) return -1;
+    }
+  }
+  return 0;
+};
+
 export const compareCheckInDate = (a, b) => {
   if (a.checkInDate < b.checkInDate) return -1;
   if (a.checkInDate > b.checkInDate) return 1;
@@ -58,9 +114,9 @@ export const filterCheckInOut = (
   checkOutDate,
   paid,
   platform,
-  option
+  option,
+  checkedIn
 ) => {
-  console.log(paid);
   if (option === "notPaid") {
     if (
       platform === "agoda" ||
@@ -72,7 +128,7 @@ export const filterCheckInOut = (
     return paid === undefined ? true : paid === null ? true : !paid;
   }
   if (option === "checkIn") {
-    return checkInDate === today;
+    return checkInDate === today && checkedIn !== true;
   } else if (option === "checkOut") {
     return checkOutDate === today;
   }

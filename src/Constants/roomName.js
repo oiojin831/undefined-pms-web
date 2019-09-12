@@ -177,4 +177,86 @@ const jhonorOptions = [
   { label: "jhonor302C", value: "jhonor302C" },
   { label: "jhonor302D", value: "jhonor302D" }
 ];
+
+const jhonorData = {
+  jhonor101A: {
+    beds: {
+      single: 2
+    },
+    passcode: "5437*"
+  },
+  jhonor101B: {
+    beds: {
+      single: 1,
+      queen: 1
+    },
+    passcode: "2403*"
+  },
+  jhonor101C: {
+    beds: {
+      single: 1,
+      queen: 1
+    },
+    passcode: "3479*"
+  },
+  jhonor101D: {
+    beds: { queen: 1 },
+    passcode: "9893*"
+  },
+  jhonor201A: {
+    beds: {
+      single: 2,
+      bunk: 1
+    },
+    passcode: "5216*"
+  },
+  jhonor201B: {
+    beds: {
+      single: 2
+    },
+    passcode: "6593*"
+  },
+  jhonor101C: {
+    beds: {
+      single: 1,
+      queen: 1
+    },
+    passcode: "3479*"
+  },
+  jhonor101D: {
+    beds: { queen: 1 },
+    passcode: "9893*"
+  }
+};
 export { resources, dmykOptions, sinsaOptions, jhonorOptions };
+
+// case "jhonor201C":
+//   return "queen: 1";
+// case "jhonor201D":
+//   return "bunk: 1";
+// case "jhonor301A":
+//   return "single: 2, bunk: 1";
+// case "jhonor301B":
+//   return "single: 2";
+// case "jhonor301C":
+//   return "queen: 1";
+// case "jhonor301D":
+//   return "bunk: 1";
+// case "jhonor202A":
+//   return "queen: 1";
+// case "jhonor202B":
+//   return "bunk: 1";
+// case "jhonor202C":
+//   return "single: 2, bunk: 1";
+// case "jhonor202D":
+//   return "single: 1, bunk: 1";
+// case "jhonor302A":
+//   return "queen: 1";
+// case "jhonor302B":
+//   return "bunk: 1";
+// case "jhonor302C":
+//   return "single: 2, bunk: 1";
+// case "jhonor302D":
+//   return "single: 1, bunk: 1";
+// default:
+//   return {};

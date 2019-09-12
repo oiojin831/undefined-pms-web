@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Checkbox } from "antd";
+import { Row, Col, Checkbox, Icon } from "antd";
 
 import { db } from "../../../firebase";
 import {
@@ -7,10 +7,11 @@ import {
   filterGuestHouse,
   filterCheckInOut,
   paidPriceSelector,
-  numOfGuests,
-  numOfTowels,
   now,
-  cleaningReducer
+  sortByPlatform,
+  sortByRoomNumber,
+  sortByCheckOut,
+  sortByCheckIn
 } from "../../../util";
 
 import "./index.css";
@@ -18,6 +19,11 @@ import "./index.css";
 export default () => {
   const [filter, setFilter] = useState("");
   const [option, setOption] = useState("");
+  const [platformSort, setPlatformSort] = useState("asc");
+  const [roomNumberSort, setRoomNumberSort] = useState("asc");
+  const [checkInSort, setCheckInSort] = useState("asc");
+  const [checkOutSort, setCheckOutSort] = useState("asc");
+  const [sort, setSort] = useState("checkIn");
   const [date, setDate] = useState(now);
   const [reservations, setReservations] = useState([]);
 
@@ -82,13 +88,48 @@ export default () => {
       console.log("error", e);
     }
   };
+  const togglePlatformSort = () => {
+    console.log("platform", platformSort);
+    setSort("platform");
+    if (platformSort === "asc") {
+      setPlatformSort("desc");
+    } else {
+      setPlatformSort("asc");
+    }
+  };
+
+  const toggleRoomNumberSort = () => {
+    setSort("roomNumber");
+    if (roomNumberSort === "asc") {
+      setRoomNumberSort("desc");
+    } else {
+      setRoomNumberSort("asc");
+    }
+  };
+
+  const toggleCheckInSort = () => {
+    setSort("checkIn");
+    if (checkInSort === "asc") {
+      setCheckInSort("desc");
+    } else {
+      setCheckInSort("asc");
+    }
+  };
+
+  const toggleCheckOutSort = () => {
+    setSort("checkOut");
+    if (checkOutSort === "asc") {
+      setCheckOutSort("desc");
+    } else {
+      setCheckOutSort("asc");
+    }
+  };
 
   return (
     <div style={{ textAlign: "center", fontSize: "14px" }}>
       <div style={{ marginTop: "3px" }}>
         <span onClick={() => setDate(date.minus({ days: 1 }))}>{"<<<<< "}</span>
         <span>{date.toFormat("yyyy-MM-dd")}</span>
-        {console.log("datae", date.toFormat("yyyy-MM-dd"))}
         <span onClick={() => setDate(date.plus({ days: 1 }))}>{" >>>>>"}</span>
       </div>
       <div
@@ -188,20 +229,40 @@ export default () => {
           borderBottom: "1px solid black"
         }}
       >
-        <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={2} onClick={toggleCheckInSort}>
           CheckIn
+          {checkInSort === "asc" ? (
+            <Icon type="sort-ascending" />
+          ) : (
+            <Icon type="sort-descending" />
+          )}
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={2} onClick={toggleCheckOutSort}>
           CheckOut
+          {checkOutSort === "asc" ? (
+            <Icon type="sort-ascending" />
+          ) : (
+            <Icon type="sort-descending" />
+          )}
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={2} onClick={toggleRoomNumberSort}>
           Room
+          {roomNumberSort === "asc" ? (
+            <Icon type="sort-ascending" />
+          ) : (
+            <Icon type="sort-descending" />
+          )}
         </Col>
         <Col xs={8} sm={5} md={4} lg={3} xl={2}>
           Name
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={2} onClick={togglePlatformSort}>
           Platform
+          {platformSort === "asc" ? (
+            <Icon type="sort-ascending" />
+          ) : (
+            <Icon type="sort-descending" />
+          )}
         </Col>
         <Col xs={8} sm={5} md={4} lg={3} xl={2}>
           Need to Pay
@@ -209,7 +270,6 @@ export default () => {
       </Row>
       <React.Fragment>
         {reservations
-          .sort(compare)
           .filter(res => filterGuestHouse(res.guestHouseName, filter))
           .filter(res =>
             filterCheckInOut(
@@ -218,9 +278,14 @@ export default () => {
               res.checkOutDate,
               res.paid,
               res.platform,
-              option
+              option,
+              res.checkedIn
             )
           )
+          .sort((a, b) => sortByCheckIn(checkInSort, sort, a, b))
+          .sort((a, b) => sortByCheckOut(checkOutSort, sort, a, b))
+          .sort((a, b) => sortByPlatform(platformSort, sort, a, b))
+          .sort((a, b) => sortByRoomNumber(roomNumberSort, sort, a, b))
           .map(res => (
             <Row
               type="flex"
@@ -228,7 +293,8 @@ export default () => {
               style={{
                 paddingTop: "3px",
                 paddingBottom: "3px",
-                borderBottom: "1px solid Gainsboro"
+                borderBottom: "1px solid Gainsboro",
+                backgroundColor: res.platform === "booking" ? "#95c8d8" : null
               }}
             >
               <Col xs={8} sm={5} md={4} lg={3} xl={2}>
