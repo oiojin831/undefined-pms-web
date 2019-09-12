@@ -91,6 +91,53 @@ export const paidPriceSelector = (platform, price, paidPrice) => {
   return `${price}원`;
 };
 
+export const numOfBeds = roomNumber => {
+  switch (roomNumber) {
+    case "jhonor101A":
+      return "single: 2";
+    case "jhonor101B":
+      return "single: 1, queen: 1";
+    case "jhonor101C":
+      return "single: 1, queen: 1";
+    case "jhonor101D":
+      return " queen: 1";
+    case "jhonor201A":
+      return "single: 2, bunk: 1";
+    case "jhonor201B":
+      return "single: 2";
+    case "jhonor201C":
+      return "queen: 1";
+    case "jhonor201D":
+      return "bunk: 1";
+    case "jhonor301A":
+      return "single: 2, bunk: 1";
+    case "jhonor301B":
+      return "single: 2";
+    case "jhonor301C":
+      return "queen: 1";
+    case "jhonor301D":
+      return "bunk: 1";
+    case "jhonor202A":
+      return "queen: 1";
+    case "jhonor202B":
+      return "bunk: 1";
+    case "jhonor202C":
+      return "single: 2, bunk: 1";
+    case "jhonor202D":
+      return "single: 1, bunk: 1";
+    case "jhonor302A":
+      return "queen: 1";
+    case "jhonor302B":
+      return "bunk: 1";
+    case "jhonor302C":
+      return "single: 2, bunk: 1";
+    case "jhonor302D":
+      return "single: 1, bunk: 1";
+    default:
+      return {};
+  }
+};
+
 export const numOfGuests = guests => {
   return guests === 1 ? 2 : guests;
 };
@@ -110,20 +157,36 @@ export const to12From = hours24 => {
 
 export const cleaningReducer = today => (cleaning, value, index) => {
   const roomNumber = value.roomNumber;
-  cleaning[roomNumber] = cleaning[roomNumber] || value;
-  if (today === value.checkInDate) {
-    cleaning[roomNumber] = {
-      ...cleaning[roomNumber],
-      guests: value.guests,
-      nights: value.nights,
-      checkInTime: value.checkInTime,
-      cleaningMemo: value.cleaningMemo
-    };
-  } else if (today === value.checkOutDate) {
-    cleaning[roomNumber] = {
-      ...cleaning[roomNumber],
-      checkOutTime: value.checkOutTime
-    };
+  if (cleaning[roomNumber] !== undefined) {
+    if (value.inFlag) {
+      cleaning[roomNumber] = {
+        ...cleaning[roomNumber],
+        guests: value.guests,
+        nights: value.nights,
+        checkInTime: value.checkInTime,
+        cleaningMemo: cleaning.cleaningMemo
+          ? cleaning.cleaningMemo +
+            (value.cleaningMemo ? `CheckIn: ${value.cleaningMemo}` : null)
+          : value.cleaningMemo
+          ? `CheckIn: ${value.cleaningMemo}`
+          : null
+      };
+    } else if (value.outFlag) {
+      console.log("value", value.checkOutDate, value.roomNumber);
+      cleaning[roomNumber] = {
+        ...cleaning[roomNumber],
+        checkOutTime: value.checkOutTime,
+        cleaningMemo: cleaning.cleaningMemo
+          ? cleaning.cleaningMemo +
+            (value.cleaningMemo ? `CheckOut: ${value.cleaningMemo}` : null)
+          : value.cleaningMemo
+          ? `CheckOut: ${value.cleaningMemo}`
+          : null
+      };
+    }
+    return cleaning;
+  } else {
+    cleaning[roomNumber] = value;
+    return cleaning;
   }
-  return cleaning;
 };
