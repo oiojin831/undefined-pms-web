@@ -29,6 +29,15 @@ import {
   DmykInfo
 } from "./Components/SelfCheckIn";
 
+import {
+  JhonorSelfCheckIn,
+  JhonorCheckInWithReservationId,
+  JhonorPlatform,
+  JhonorCheckInInfo,
+  JhonorInfo,
+  JSCIHome
+} from "./Components/JhonorSelfCheckIn";
+
 import "./index.css";
 
 const NotFound = () => <div>Page not Found.</div>;
@@ -70,6 +79,16 @@ export default () => {
             <DmykInfo path="dmyk-info" />
           </Platform>
         </SelfCheckIn>
+        <JhonorSelfCheckIn path="jhonor-self-check-in">
+          <NotFound default />
+          <JSCIHome path="/" />
+          <JhonorPlatform path="jhonor-platform">
+            <JhonorCheckInWithReservationId path="/" />
+            <NotFound default />
+            <JhonorInfo path="jhonor-info" />
+            <JhonorCheckInInfo path="jhonor-check-in-info" />
+          </JhonorPlatform>
+        </JhonorSelfCheckIn>
         <ReservationUpdate path="reservation">
           <NotFound default />
           <GetReservationId path="/" />

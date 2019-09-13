@@ -14,6 +14,8 @@ import {
   sortByCheckIn
 } from "../../../util";
 
+import { jhonorData, jhonorOptions } from "../../../Constants/roomName";
+
 import "./index.css";
 
 export default () => {
@@ -267,6 +269,9 @@ export default () => {
         <Col xs={8} sm={5} md={4} lg={3} xl={2}>
           Need to Pay
         </Col>
+        <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+          Passcode
+        </Col>
       </Row>
       <React.Fragment>
         {reservations
@@ -324,6 +329,11 @@ export default () => {
                 >
                   {paidPriceSelector(res.platform, res.price, res.paid)}
                 </Checkbox>
+              </Col>
+              <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+                {res.guestHouseName === "jhonor"
+                  ? jhonorData[res.roomNumber].passcode
+                  : "not updated yet"}
               </Col>
             </Row>
           ))}

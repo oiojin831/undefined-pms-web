@@ -183,80 +183,137 @@ const jhonorData = {
     beds: {
       single: 2
     },
-    passcode: "5437*"
+    passcode: "5437*",
+    wifi: "77777777"
   },
   jhonor101B: {
     beds: {
       single: 1,
       queen: 1
     },
-    passcode: "2403*"
+    passcode: "2403*",
+    wifi: "77777777"
   },
   jhonor101C: {
     beds: {
       single: 1,
       queen: 1
     },
-    passcode: "3479*"
+    passcode: "3479*",
+    wifi: "77777777"
   },
   jhonor101D: {
     beds: { queen: 1 },
-    passcode: "9893*"
+    passcode: "9893*",
+    wifi: "77777777"
   },
   jhonor201A: {
     beds: {
       single: 2,
       bunk: 1
     },
-    passcode: "5216*"
+    passcode: "5216*",
+    wifi: "77777777"
   },
   jhonor201B: {
     beds: {
       single: 2
     },
-    passcode: "6593*"
+    passcode: "6593*",
+    wifi: "77777777"
   },
-  jhonor101C: {
+  jhonor201C: {
     beds: {
-      single: 1,
       queen: 1
     },
-    passcode: "3479*"
+    passcode: "1269*",
+    wifi: "77777777"
   },
-  jhonor101D: {
-    beds: { queen: 1 },
-    passcode: "9893*"
+  jhonor201D: {
+    beds: { bunk: 1 },
+    passcode: "7508*",
+    wifi: "77777777"
+  },
+  jhonor202A: {
+    beds: {
+      queen: 1
+    },
+    passcode: "2674*",
+    wifi: "77777777"
+  },
+  jhonor202B: {
+    beds: {
+      bunk: 2
+    },
+    passcode: "8086*",
+    wifi: "77777777"
+  },
+  jhonor202C: {
+    beds: {
+      single: 2,
+      bunk: 1
+    },
+    passcode: "0359*",
+    wifi: "77777777"
+  },
+  jhonor202D: {
+    beds: { single: 1, bunk: 1 },
+    passcode: "1410*",
+    wifi: "77777777"
+  },
+  jhonor301A: {
+    beds: {
+      single: 2,
+      bunk: 1
+    },
+    passcode: "5272*",
+    wifi: "77777777"
+  },
+  jhonor301B: {
+    beds: {
+      single: 2
+    },
+    passcode: "8625*",
+    wifi: "77777777"
+  },
+  jhonor301C: {
+    beds: {
+      queen: 1
+    },
+    passcode: "7505*",
+    wifi: "77777777"
+  },
+  jhonor301D: {
+    beds: { bunk: 1 },
+    passcode: "0430*",
+    wifi: "77777777"
+  },
+  jhonor302A: {
+    beds: {
+      queen: 1
+    },
+    passcode: "6236*",
+    wifi: "77777777"
+  },
+  jhonor302B: {
+    beds: {
+      bunk: 2
+    },
+    passcode: "1774*",
+    wifi: "77777777"
+  },
+  jhonor302C: {
+    beds: {
+      single: 2,
+      bunk: 1
+    },
+    passcode: "3120*",
+    wifi: "77777777"
+  },
+  jhonor302D: {
+    beds: { single: 1, bunk: 1 },
+    passcode: "0288*",
+    wifi: "77777777"
   }
 };
-export { resources, dmykOptions, sinsaOptions, jhonorOptions };
-
-// case "jhonor201C":
-//   return "queen: 1";
-// case "jhonor201D":
-//   return "bunk: 1";
-// case "jhonor301A":
-//   return "single: 2, bunk: 1";
-// case "jhonor301B":
-//   return "single: 2";
-// case "jhonor301C":
-//   return "queen: 1";
-// case "jhonor301D":
-//   return "bunk: 1";
-// case "jhonor202A":
-//   return "queen: 1";
-// case "jhonor202B":
-//   return "bunk: 1";
-// case "jhonor202C":
-//   return "single: 2, bunk: 1";
-// case "jhonor202D":
-//   return "single: 1, bunk: 1";
-// case "jhonor302A":
-//   return "queen: 1";
-// case "jhonor302B":
-//   return "bunk: 1";
-// case "jhonor302C":
-//   return "single: 2, bunk: 1";
-// case "jhonor302D":
-//   return "single: 1, bunk: 1";
-// default:
-//   return {};
+export { resources, dmykOptions, sinsaOptions, jhonorOptions, jhonorData };

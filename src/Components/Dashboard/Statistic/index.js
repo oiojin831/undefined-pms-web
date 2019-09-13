@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import { db } from "../../../firebase.js";
 import { DatePicker, SubmitButton } from "@jbuschke/formik-antd";
-import { formattedNow, fromISOtoString } from "../../../util";
+import { formattedNow, getDaysArray, fromISOtoString } from "../../../util";
 import Chart from "react-apexcharts";
+
 const krwToString = price => {
+  console.log(typeof price === "number");
+  if (typeof price === "number") {
+    return price;
+  }
   return Number(price.replace(/[^0-9\.]+/g, ""));
 };
 
@@ -16,41 +21,44 @@ export default () => {
 
   async function fetchDocs(values, actions) {
     actions.setSubmitting(true);
-    const querySnapshot = await db
-      .collection("reservations")
-      .where("checkInDate", ">=", "2019-09-01")
-      .get();
 
     try {
-      let num = 0;
-      await querySnapshot.forEach(doc => {
-        if (doc.data().guestHouseName === "jhonor") {
-          console.log("docid", doc.data().guestName);
-          doc.data().stayingDates.forEach((date, idx, arr) => {
-            if (idx != -1) {
-              if (date >= "2019-09-01" && date < "2019-10-01") {
-                num = num + 1;
-              }
-            }
-          });
-          console.log("num", num);
-        }
-
-        // let num = 0;
-        // let totalPrice = 0;
-        // await querySnapshot.forEach(doc => {
-        //   if (doc.data().guestHouseName === "jhonor") {
-        //     if (
-        //       doc.data().checkInDate >= "2019-09-01" &&
-        //       doc.data().checkInDate < "2019-10-01"
-        //     ) {
-        //       totalPrice =
-        //         totalPrice + parseInt(krwToString(`${doc.data().payoutPrice}`));
-        //     }
-        //   }
+      let totalSum = 0;
+      const dates = getDaysArray(
+        new Date(values.startDate),
+        new Date(values.endDate)
+      );
+      const promises = [];
+      console.log("dates", dates);
+      dates.forEach(date => {
+        const p = db
+          .collection("reservations")
+          .where("stayingDates", "array-contains", date)
+          .get();
+        promises.push(p);
       });
-      setSeries([num, 30 * 17 - num]);
+      const snapshots = await Promise.all(promises);
+      snapshots.forEach(function(snapshot, i) {
+        let daySum = 0;
+        snapshot.forEach(doc => {
+          let roomSum = 0;
+          if (
+            doc.data().checkOutDate !== dates[i] &&
+            doc.data().guestHouseName === "jhonor"
+          ) {
+            roomSum =
+              roomSum + krwToString(doc.data().payoutPrice) / doc.data().nights;
+            console.log(doc.data().guestName, roomSum);
+          }
+          daySum = daySum + roomSum;
+        });
+        totalSum = daySum + totalSum;
+        console.log("total", totalSum);
+      });
+
+      //   setSeries([num, 30 * 17 - num]);
       //console.log(totalPrice);
+      setNum(totalSum);
       actions.setSubmitting(false);
     } catch (error) {
       console.log("error", error.toString());
@@ -68,6 +76,7 @@ export default () => {
       }}
       render={({ isSubmitting, values }) => (
         <React.Fragment>
+          <div>예상매출</div>
           <div style={{ marginTop: "50px" }}>
             <DatePicker name="startDate" />
             <DatePicker name="endDate" />
@@ -75,7 +84,8 @@ export default () => {
           <div style={{ marginTop: "10px" }}>
             <SubmitButton disabled={isSubmitting}>Submit</SubmitButton>
           </div>
-          <Chart options={options} series={series} type="donut" width="380" />
+          <div>{num}</div>
+          {/* <Chart options={options} series={series} type="donut" width="380" />*/}
         </React.Fragment>
       )}
     />
