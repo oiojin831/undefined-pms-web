@@ -25,19 +25,36 @@ export default () => {
       .where("stayingDates", "array-contains", date.toFormat("yyyy-MM-dd"))
       .get();
     query.forEach(doc => {
-      let inFlag =
-        doc.data().checkInDate === date.toFormat("yyyy-MM-dd") ? true : false;
-      let outFlag =
-        doc.data().checkOutDate === date.toFormat("yyyy-MM-dd") ? true : false;
-      console.log(
-        "data",
-        doc.data().checkOutDate,
-        "-----",
-        outFlag,
-        doc.data().roomNumber
+      let inFlag = false;
+      let outFlag = false;
+
+      if (doc.data().checkInDate === date.toFormat("yyyy-MM-dd")) {
+        inFlag = true;
+      } else if (doc.data().checkOutDate === date.toFormat("yyyy-MM-dd")) {
+        outFlag = true;
+      }
+
+      const foundIndex = docs.findIndex(
+        item => item.roomNumber === doc.data().roomNumber
       );
-      docs.push({ ...doc.data(), id: doc.id, inFlag, outFlag });
+      console.log(foundIndex);
+      // TODO id 가 out id in id가 있어야되네
+      if (inFlag) {
+        if (foundIndex !== -1) {
+          docs[foundIndex] = { ...docs[foundIndex], inFlag };
+        } else {
+          docs.push({ ...doc.data(), id: doc.id, inFlag });
+        }
+      }
+      if (outFlag) {
+        if (foundIndex !== -1) {
+          docs[foundIndex] = { ...docs[foundIndex], outFlag };
+        } else {
+          docs.push({ ...doc.data(), id: doc.id, outFlag });
+        }
+      }
     });
+    console.log(docs);
     setReservations(docs);
   }
 
@@ -46,11 +63,13 @@ export default () => {
   }, [date]);
 
   const cleaningState = (inFlag, outFlag) => {
-    if (inFlag && outFlag) {
+    // TODO 취약점 애초의 예약을 보고하는거라서 체크아웃도 체크인도 없는 방이면 청소리스트에서 뜰수가없다.
+    console.log(inFlag, outFlag);
+    if (!!inFlag && !!outFlag) {
       return <div style={{ color: "red" }}>우선 청소</div>;
-    } else if (inFlag === true && outFlag === false) {
+    } else if (!!inFlag === true && !!outFlag === false) {
       return "체크 하기";
-    } else if (inFlag === false && outFlag === true) {
+    } else if (!!inFlag === false && !!outFlag === true) {
       return "";
     } else {
       return "no 청소";
