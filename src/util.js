@@ -189,6 +189,8 @@ export const numOfBeds = roomNumber => {
       return "single: 2, bunk: 1";
     case "jhonor302D":
       return "single: 1, bunk: 1";
+    case "jhonor302X":
+      return "single: 3, bunk: 1, queen: 1";
     default:
       return {};
   }
