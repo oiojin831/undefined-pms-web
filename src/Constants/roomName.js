@@ -297,7 +297,7 @@ const jhonorData = {
   },
   jhonor302B: {
     beds: {
-      bunk: 2
+      bunk: 1
     },
     passcode: "1774*",
     wifi: "77777777"
@@ -313,6 +313,11 @@ const jhonorData = {
   jhonor302D: {
     beds: { single: 1, bunk: 1 },
     passcode: "0288*",
+    wifi: "77777777"
+  },
+  jhonor302X: {
+    beds: { single: 3, bunk: 3, queen: 1 },
+    passcode: "0302*",
     wifi: "77777777"
   }
 };
