@@ -67,6 +67,13 @@ export default () => {
           ) {
             roomSum =
               roomSum + krwToString(doc.data().payoutPrice) / doc.data().nights;
+            console.log(
+              "doc.data()",
+              doc.data().reservationCode,
+              doc.data().payoutPrice,
+              doc.data().nights
+            );
+            console.log("roomSum", roomSum);
           }
           daySum = daySum + roomSum;
 
@@ -99,7 +106,6 @@ export default () => {
             oneDayBeds.push(jhonorData[doc.data().roomNumber].beds);
           }
         });
-        console.log("onedaybes", oneDayBeds);
         let singleBlankets = _.sumBy(oneDayBeds, room => {
           let s = room.single ? room.single : 0;
           let b = room.bunk ? room.bunk : 0;
@@ -112,6 +118,7 @@ export default () => {
         blanketSum[dates[i]] = { single: singleBlankets, queen: queenBlankets };
         blanketTotalSum.push({ single: singleBlankets, queen: queenBlankets });
         totalSum = daySum + totalSum;
+        console.log("totalSum", totalSum);
         totalFilledSum = dayFilledSum + totalFilledSum;
         totalFilledSumFromToday =
           dayFilledSumFromToday + totalFilledSumFromToday;

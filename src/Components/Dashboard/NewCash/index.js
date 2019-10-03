@@ -66,6 +66,7 @@ export default () => {
               .toString()
               .substring(0, 10),
             stayingDates: stayingDates,
+            price: values.payoutPrice,
             nights: stayingDates.length - 1,
             reservationCode
           });
