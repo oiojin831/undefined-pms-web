@@ -1,17 +1,18 @@
-import React from 'react'
+import React from "react";
 
 export default () => {
   return (
     <div
       style={{
-        display: 'flex',
-        height: '50vh',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        color: 'white',
-        textAlign: 'center',
-      }}>
+        display: "flex",
+        height: "45vh",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        alignItems: "center",
+        color: "white",
+        textAlign: "center"
+      }}
+    >
       <div>
         Please call us,
         <br />
@@ -37,5 +38,5 @@ export default () => {
         pw: welcometodmyk
       </div>
     </div>
-  )
-}
+  );
+};

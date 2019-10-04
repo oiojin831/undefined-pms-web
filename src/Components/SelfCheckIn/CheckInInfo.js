@@ -42,7 +42,7 @@ export default props => {
       style={{
         color: "white",
         fontSize: "30px",
-        height: "50vh",
+        height: "45vh",
         display: "flex",
         paddingTop: "30px",
         paddingRight: "10px",
@@ -68,7 +68,7 @@ export default props => {
         passCode[props.location.state.roomNumber]["passCode"]
       }`}</div>
       <div style={{ fontSize: "10px" }}>
-        Don't forget to enter # in the end.
+        Don't forget to enter 🔓 in the end.
       </div>
       <div>Your wifi is..</div>
       <div>{`${passCode[props.location.state.roomNumber]["wifi"]}`}</div>
