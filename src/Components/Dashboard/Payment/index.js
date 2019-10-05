@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Checkbox, Icon } from "antd";
-
+import MemoForm from "./MemoForm";
 import { db } from "../../../firebase";
 import {
   compare,
@@ -272,6 +272,9 @@ export default () => {
         <Col xs={8} sm={5} md={4} lg={3} xl={2}>
           Passcode
         </Col>
+        <Col xs={16} sm={10} md={8} lg={6} xl={4}>
+          CheckInOut Memo
+        </Col>
       </Row>
       <React.Fragment>
         {reservations
@@ -335,6 +338,9 @@ export default () => {
                 {res.guestHouseName === "jhonor"
                   ? jhonorData[res.roomNumber].passcode
                   : "not updated yet"}
+              </Col>
+              <Col xs={16} sm={10} md={8} lg={6} xl={4}>
+                <MemoForm key={`memo-${res.reservationCode}`} {...res} />
               </Col>
             </Row>
           ))}
