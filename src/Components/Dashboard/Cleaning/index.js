@@ -25,36 +25,83 @@ export default () => {
       .where("stayingDates", "array-contains", date.toFormat("yyyy-MM-dd"))
       .get();
     query.forEach(doc => {
+      console.log(
+        "data!!!!!!!!!",
+        doc.data().roomNumber,
+        " ",
+        doc.data().checkInDate,
+        " ",
+        doc.data().checkOutDate
+      );
       let inFlag = false;
       let outFlag = false;
 
+      console.log(
+        `checkin: ${doc.data().checkInDate}, checkout: ${
+          doc.data().checkOutDate
+        }`
+      );
       if (doc.data().checkInDate === date.toFormat("yyyy-MM-dd")) {
         inFlag = true;
       } else if (doc.data().checkOutDate === date.toFormat("yyyy-MM-dd")) {
         outFlag = true;
       }
 
-      const foundIndex = docs.findIndex(
-        item => item.roomNumber === doc.data().roomNumber
-      );
-      console.log(foundIndex);
+      if ((inFlag || outFlag) === false) return;
+
+      // docs is my new data including in, out flag
+      const foundIndex = docs.findIndex(item => {
+        if (item.in !== undefined) {
+          return item.in.roomNumber === doc.data().roomNumber;
+        }
+        if (item.out !== undefined) {
+          return item.out.roomNumber === doc.data().roomNumber;
+        }
+      });
+      console.log("fountIndex", foundIndex, " ", doc.data().roomNumber);
+      console.log("inflag", inFlag, " ", "outFlag", outFlag);
       // TODO id 가 out id in id가 있어야되네
       if (inFlag) {
         if (foundIndex !== -1) {
-          docs[foundIndex] = { ...docs[foundIndex], inFlag };
+          console.log("in exist");
+          docs[foundIndex] = {
+            ...docs[foundIndex],
+            in: { ...doc.data(), id: doc.id }
+          };
         } else {
-          docs.push({ ...doc.data(), id: doc.id, inFlag });
+          console.log("in new");
+          docs.push({
+            in: { ...doc.data(), id: doc.id },
+            guestHouseName: doc.data().guestHouseName,
+            checkDate: doc.data().checkInDate,
+            roomNumber: doc.data().roomNumber,
+            reservationCode: doc.data().reservationCode
+          });
         }
       }
       if (outFlag) {
         if (foundIndex !== -1) {
-          docs[foundIndex] = { ...docs[foundIndex], outFlag };
+          console.log("out exist");
+          docs[foundIndex] = {
+            ...docs[foundIndex],
+            out: { ...doc.data(), id: doc.id }
+          };
         } else {
-          docs.push({ ...doc.data(), id: doc.id, outFlag });
+          console.log("out new");
+          docs.push({
+            out: {
+              ...doc.data(),
+              id: doc.id
+            },
+            guestHouseName: doc.data().guestHouseName,
+            checkDate: doc.data().checkOutDate,
+            roomNumber: doc.data().roomNumber,
+            reservationCode: doc.data().reservationCode
+          });
         }
       }
     });
-    console.log(docs);
+    console.log("docs", docs);
     setReservations(docs);
   }
 
@@ -125,48 +172,46 @@ export default () => {
         reservations
           .sort(compare)
           .filter(res => filterGuestHouse(res.guestHouseName, filter))
-          .filter(
-            res =>
-              res.checkOutDate === date.toFormat("yyyy-MM-dd") ||
-              res.checkInDate === date.toFormat("yyyy-MM-dd")
-          )
+          .filter(res => res.checkDate === date.toFormat("yyyy-MM-dd"))
           .reduce(cleaningReducer(date.toFormat("yyyy-MM-dd")), {})
       ).map(outRes => {
-        if (outRes) {
-          return (
-            <div key={outRes.reservationCode} className="box">
-              <h1>{outRes.roomNumber}</h1>
-              <div>{`Check Out: ${outRes.checkOutTime}`}</div>
-              <div>{`Check In: ${outRes.checkInTime}`}</div>
-              <div>{`# of guests: ${numOfGuests(
-                parseInt(outRes.guests)
-              )}`}</div>
-              <div>{`towels: ${numOfTowels(
-                numOfGuests(parseInt(outRes.guests)),
-                outRes.nights
-              )}`}</div>
-              {cleaningState(outRes.inFlag, outRes.outFlag)}
-              {outRes.cleaningMemo && (
-                <div style={{ color: "red" }}>
-                  {`Cleaning Memo: ${outRes.cleaningMemo}`}
-                </div>
-              )}
-              <div>
-                {outRes.guestHouseName === "jhonor"
-                  ? numOfBeds(outRes.roomNumber)
-                  : null}
+        return (
+          <div key={outRes.reservationCode} className="box">
+            <h1>{outRes.roomNumber}</h1>
+            <div>{`Check Out: ${
+              outRes.out ? outRes.out.checkOutTime : 11
+            }`}</div>
+            <div>{`Check In: ${outRes.in ? outRes.in.checkInTime : 3}`}</div>
+            <div>{`${numOfGuests(
+              parseInt(outRes.in ? outRes.in.guests : 0)
+            )} guests`}</div>
+            <div>{`${parseInt(outRes.in ? outRes.in.nights : 0)} nights`}</div>
+            <div>{`${
+              outRes.in
+                ? numOfTowels(
+                    numOfGuests(parseInt(outRes.in.guests)),
+                    outRes.in.nights
+                  )
+                : 4
+            } towels`}</div>
+            {outRes.cleaningMemo && (
+              <div style={{ color: "red" }}>
+                {`Cleaning Memo: ${outRes.cleaningMemo}`}
               </div>
+            )}
+            <div>
+              {outRes.guestHouseName === "jhonor"
+                ? numOfBeds(outRes.roomNumber)
+                : null}
             </div>
-          );
-        } else {
-          return (
-            <div key={outRes.reservationCode} className="box">
-              <h1>{outRes.roomNumber}</h1>
-              <div>{`Check Out: ${outRes.checkOutTime}`}</div>
-              <div>{"N/A"}</div>
+            <div>
+              {cleaningState(
+                outRes.hasOwnProperty("in"),
+                outRes.hasOwnProperty("out")
+              )}
             </div>
-          );
-        }
+          </div>
+        );
       })}
     </div>
   );

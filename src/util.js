@@ -215,33 +215,29 @@ export const to12From = hours24 => {
 
 export const cleaningReducer = today => (cleaning, value, index) => {
   const roomNumber = value.roomNumber;
-  if (cleaning[roomNumber] !== undefined) {
-    if (value.inFlag) {
-      cleaning[roomNumber] = {
-        ...cleaning[roomNumber],
-        guests: value.guests,
-        nights: value.nights,
-        checkInTime: value.checkInTime,
-        cleaningMemo: cleaning.cleaningMemo
-          ? cleaning.cleaningMemo +
-            (value.cleaningMemo ? `CheckIn: ${value.cleaningMemo}` : null)
-          : value.cleaningMemo
-          ? `CheckIn: ${value.cleaningMemo}`
-          : null
-      };
-    } else if (value.outFlag) {
-      console.log("value", value.checkOutDate, value.roomNumber);
-      cleaning[roomNumber] = {
-        ...cleaning[roomNumber],
-        checkOutTime: value.checkOutTime,
-        cleaningMemo: cleaning.cleaningMemo
-          ? cleaning.cleaningMemo +
-            (value.cleaningMemo ? `CheckOut: ${value.cleaningMemo}` : null)
-          : value.cleaningMemo
-          ? `CheckOut: ${value.cleaningMemo}`
-          : null
-      };
+  console.log("roomNumber", roomNumber);
+  console.log("cleaning[roomNumber", cleaning[roomNumber]);
+  console.log("value", value);
+  let cleaningInOutMemo = () => {
+    let memo = "";
+    if (value.in.cleaningMemo) {
+      memo = memo + `checkin memo: ${value.in.cleaningMemo}\n`;
+    } else if (value.out.cleaningMemo) {
+      memo = memo + `checkout memo: ${value.out.cleaningMemo}\n`;
     }
+    return memo;
+  };
+
+  if (cleaning[roomNumber] !== undefined) {
+    cleaning[roomNumber] = {
+      ...cleaning[roomNumber],
+      guests: value.in.guests,
+      nights: value.in.nights,
+      checkInTime: value.in.checkInTime,
+      checkOutTime: value.out.checkOutTime,
+      cleaningMemo: cleaningInOutMemo,
+      roomNumber: value.roomNumber
+    };
     return cleaning;
   } else {
     cleaning[roomNumber] = value;
