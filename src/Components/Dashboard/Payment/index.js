@@ -15,6 +15,9 @@ import {
 } from "../../../util";
 
 import { jhonorData, jhonorOptions } from "../../../Constants/roomName";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
+import passcodeTemplate from "./PasscodeTemplate";
 
 import "./index.css";
 
@@ -270,7 +273,7 @@ export default () => {
           Need to Pay
         </Col>
         <Col xs={8} sm={5} md={4} lg={3} xl={3}>
-          Passcode
+          {`Save Passcode`}
         </Col>
         <Col xs={8} sm={5} md={4} lg={3} xl={3}>
           Reservation Code
@@ -336,12 +339,23 @@ export default () => {
                   {paidPriceSelector(res.platform, res.price, res.paid)}
                 </Checkbox>
               </Col>
-              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
-                {console.log("rese.room", res.roomNumber)}
-                {res.guestHouseName === "jhonor"
-                  ? jhonorData[res.roomNumber].passcode
-                  : "not updated yet"}
-              </Col>
+              <CopyToClipboard
+                text={passcodeTemplate(
+                  res.guestName,
+                  res.roomNumber,
+                  res.guestHouseName === "jhonor"
+                    ? jhonorData[res.roomNumber].passcode
+                    : "not updated yet"
+                )}
+                onCopy={() => alert(`${res.roomNumber} message saved`)}
+              >
+                <Col xs={8} sm={5} md={4} lg={3} xl={3}>
+                  {console.log("rese.room", res.roomNumber)}
+                  {res.guestHouseName === "jhonor"
+                    ? jhonorData[res.roomNumber].passcode
+                    : "not updated yet"}
+                </Col>
+              </CopyToClipboard>
               <Col xs={8} sm={5} md={4} lg={3} xl={3}>
                 {res.reservationCode}
               </Col>
