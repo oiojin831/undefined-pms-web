@@ -66,7 +66,12 @@ export default () => {
           console.log("in exist");
           docs[foundIndex] = {
             ...docs[foundIndex],
-            in: { ...doc.data(), id: doc.id }
+            in: { ...doc.data(), id: doc.id },
+            cleaningMemo: doc.data().cleaningMemo
+              ? `${docs[foundIndex].cleaningMemo}, checkin: ${
+                  doc.data().cleaningMemo
+                }`
+              : doc[foundIndex].cleaningMemo
           };
         } else {
           console.log("in new");
@@ -75,16 +80,25 @@ export default () => {
             guestHouseName: doc.data().guestHouseName,
             checkDate: doc.data().checkInDate,
             roomNumber: doc.data().roomNumber,
-            reservationCode: doc.data().reservationCode
+            reservationCode: doc.data().reservationCode,
+            cleaningMemo: doc.data().cleaningMemo
+              ? `checkin: ${doc.data().cleaningMemo}`
+              : ""
           });
         }
       }
       if (outFlag) {
         if (foundIndex !== -1) {
           console.log("out exist");
+          console.log("doc.data()", doc.data());
           docs[foundIndex] = {
             ...docs[foundIndex],
-            out: { ...doc.data(), id: doc.id }
+            out: { ...doc.data(), id: doc.id },
+            cleaningMemo: doc.data().cleaningMemo
+              ? `${docs[foundIndex].cleaningMemo}, checkout: ${
+                  doc.data().cleaningMemo
+                }`
+              : doc[foundIndex].cleaningMemo
           };
         } else {
           console.log("out new");
@@ -96,7 +110,10 @@ export default () => {
             guestHouseName: doc.data().guestHouseName,
             checkDate: doc.data().checkOutDate,
             roomNumber: doc.data().roomNumber,
-            reservationCode: doc.data().reservationCode
+            reservationCode: doc.data().reservationCode,
+            cleaningMemo: doc.data().cleaningMemo
+              ? `checkin: ${doc.data().cleaningMemo}`
+              : ""
           });
         }
       }
@@ -173,7 +190,6 @@ export default () => {
           .sort(compare)
           .filter(res => filterGuestHouse(res.guestHouseName, filter))
           .filter(res => res.checkDate === date.toFormat("yyyy-MM-dd"))
-          .reduce(cleaningReducer(date.toFormat("yyyy-MM-dd")), {})
       ).map(outRes => {
         return (
           <div key={outRes.reservationCode} className="box">
@@ -194,6 +210,7 @@ export default () => {
                   )
                 : 4
             } towels`}</div>
+            {console.log("outRes.cleaningmMeo", outRes.cleaningMemo)}
             {outRes.cleaningMemo && (
               <div style={{ color: "red" }}>
                 {`Cleaning Memo: ${outRes.cleaningMemo}`}

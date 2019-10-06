@@ -220,13 +220,25 @@ export const cleaningReducer = today => (cleaning, value, index) => {
   console.log("value", value);
   let cleaningInOutMemo = () => {
     let memo = "";
-    if (value.in.cleaningMemo) {
-      memo = memo + `checkin memo: ${value.in.cleaningMemo}\n`;
-    } else if (value.out.cleaningMemo) {
-      memo = memo + `checkout memo: ${value.out.cleaningMemo}\n`;
+    console.log("0", memo);
+    if (value.hasOwnProperty("in")) {
+      console.log("1-1", memo);
+      if (value.in.hasOwnProperty("cleaningMemo")) {
+        memo = memo + `checkin memo: ${value.in.cleaningMemo}\n`;
+        console.log("1", memo);
+      }
     }
+    if (value.hasOwnProperty("out")) {
+      if (value.out.hasOwnProperty("cleaningMemo")) {
+        memo = memo + `checkout memo: ${value.out.cleaningMemo}\n`;
+        console.log("2", memo);
+      }
+    }
+    console.log("3", memo);
     return memo;
   };
+  let cMemo = cleaningInOutMemo();
+  console.log(cMemo, "cMemo");
 
   if (cleaning[roomNumber] !== undefined) {
     cleaning[roomNumber] = {
@@ -235,7 +247,7 @@ export const cleaningReducer = today => (cleaning, value, index) => {
       nights: value.in.nights,
       checkInTime: value.in.checkInTime,
       checkOutTime: value.out.checkOutTime,
-      cleaningMemo: cleaningInOutMemo,
+      cleaningMemo: cMemo,
       roomNumber: value.roomNumber
     };
     return cleaning;
