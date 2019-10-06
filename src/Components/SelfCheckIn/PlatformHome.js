@@ -16,10 +16,10 @@ export default () => (
       to="airbnb"
       style={{
         fontSize: "30px",
-        padding: "50px 40px",
-        border: "solid 2px #F75924",
+        padding: "30px 20px",
+        border: "solid 2px #FEF8D6",
         borderRadius: "5px",
-        color: "#F75924",
+        color: "#FEF8D6",
         marginRight: "20px"
       }}
     >
@@ -29,10 +29,10 @@ export default () => (
       to="others"
       style={{
         fontSize: "30px",
-        padding: "50px 40px",
-        border: "solid 2px #F75924",
+        padding: "30px 20px",
+        border: "solid 2px #FEF8D6",
         borderRadius: "5px",
-        color: "#F75924"
+        color: "#FEF8D6"
       }}
     >
       Other Platform

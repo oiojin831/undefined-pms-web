@@ -9,6 +9,7 @@ import CheckInInfo from "./CheckInInfo";
 import DmykInfo from "./DmykInfo";
 import "./index.css";
 import desktopImage from "../../bg.jpg";
+import logo from "../../dmyk-1.png";
 import { Link } from "@reach/router";
 
 const SelfCheckIn = ({ children }) => {
@@ -25,7 +26,13 @@ const SelfCheckIn = ({ children }) => {
           fontWeight: "bold"
         }}
       >
-        dmyk.
+        <div
+          style={{
+            backgroundImage: `url(${logo})`,
+            width: "368px",
+            height: "141px"
+          }}
+        ></div>
       </div>
       {children}
       <div
@@ -40,10 +47,10 @@ const SelfCheckIn = ({ children }) => {
           <Link
             style={{
               fontSize: "30px",
-              padding: "30px 20px",
-              border: "solid 2px #F75924",
+              padding: "20px 10px",
+              border: "solid 2px #FEF8D6",
               borderRadius: "5px",
-              color: "#F75924"
+              color: "#FEF8D6"
             }}
             to="/self-check-in"
           >
