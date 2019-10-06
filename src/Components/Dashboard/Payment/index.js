@@ -224,14 +224,14 @@ export default () => {
       </div>
       <Row
         type="flex"
-        justify="start"
+        justify="center"
         style={{
           backgroundColor: "#D3D3D3",
           paddingTop: "3px",
           borderBottom: "1px solid black"
         }}
       >
-        <Col xs={8} sm={5} md={4} lg={3} xl={2} onClick={toggleCheckInSort}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={3} onClick={toggleCheckInSort}>
           CheckIn
           {checkInSort === "asc" ? (
             <Icon type="sort-ascending" />
@@ -239,7 +239,7 @@ export default () => {
             <Icon type="sort-descending" />
           )}
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2} onClick={toggleCheckOutSort}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={3} onClick={toggleCheckOutSort}>
           CheckOut
           {checkOutSort === "asc" ? (
             <Icon type="sort-ascending" />
@@ -247,7 +247,7 @@ export default () => {
             <Icon type="sort-descending" />
           )}
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2} onClick={toggleRoomNumberSort}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={3} onClick={toggleRoomNumberSort}>
           Room
           {roomNumberSort === "asc" ? (
             <Icon type="sort-ascending" />
@@ -255,10 +255,10 @@ export default () => {
             <Icon type="sort-descending" />
           )}
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={3}>
           Name
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2} onClick={togglePlatformSort}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={3} onClick={togglePlatformSort}>
           Platform
           {platformSort === "asc" ? (
             <Icon type="sort-ascending" />
@@ -266,13 +266,16 @@ export default () => {
             <Icon type="sort-descending" />
           )}
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={3}>
           Need to Pay
         </Col>
-        <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={3}>
           Passcode
         </Col>
-        <Col xs={16} sm={10} md={8} lg={6} xl={4}>
+        <Col xs={8} sm={5} md={4} lg={3} xl={3}>
+          Reservation Code
+        </Col>
+        <Col xs={24} sm={24} md={16} lg={24} xl={24}>
           CheckInOut Memo
         </Col>
       </Row>
@@ -297,7 +300,7 @@ export default () => {
           .map(res => (
             <Row
               type="flex"
-              justify="start"
+              justify="center"
               style={{
                 paddingTop: "3px",
                 paddingBottom: "3px",
@@ -305,7 +308,7 @@ export default () => {
                 backgroundColor: res.platform === "booking" ? "#95c8d8" : null
               }}
             >
-              <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
                 <Checkbox
                   checked={res.checkedIn}
                   onChange={e => onCheckInChange(e, res)}
@@ -313,19 +316,19 @@ export default () => {
                   {res.checkInDate.slice(5, 10)}
                 </Checkbox>
               </Col>
-              <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
                 {res.checkOutDate.slice(5, 10)}
               </Col>
-              <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
                 {res.roomNumber}
               </Col>
-              <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
                 {res.guestName}
               </Col>
-              <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
                 {res.platform}
               </Col>
-              <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
                 <Checkbox
                   checked={res.paid}
                   onChange={e => onPaidChange(e, res)}
@@ -333,13 +336,16 @@ export default () => {
                   {paidPriceSelector(res.platform, res.price, res.paid)}
                 </Checkbox>
               </Col>
-              <Col xs={8} sm={5} md={4} lg={3} xl={2}>
+              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
                 {console.log("rese.room", res.roomNumber)}
                 {res.guestHouseName === "jhonor"
                   ? jhonorData[res.roomNumber].passcode
                   : "not updated yet"}
               </Col>
-              <Col xs={16} sm={10} md={8} lg={6} xl={4}>
+              <Col xs={8} sm={5} md={4} lg={3} xl={3}>
+                {res.reservationCode}
+              </Col>
+              <Col xs={24} sm={24} md={16} lg={24} xl={24}>
                 <MemoForm key={`memo-${res.reservationCode}`} {...res} />
               </Col>
             </Row>

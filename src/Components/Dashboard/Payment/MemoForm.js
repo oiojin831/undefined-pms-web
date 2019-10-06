@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { db } from "../../../firebase.js";
 import { Formik } from "formik";
-import { Input, InputNumber, SubmitButton } from "@jbuschke/formik-antd";
+import { Input, SubmitButton } from "@jbuschke/formik-antd";
 
 export default props => {
   const [checkInOutMemo, setCheckInOutMemo] = useState(props.checkInOutMemo);
   return (
-    <div>
+    <div style={{ margin: "0 10px" }}>
       {checkInOutMemo && <div>{`Memo: ${checkInOutMemo}`}</div>}
 
       <Formik
@@ -31,15 +31,15 @@ export default props => {
           }
         }}
         render={({ values, isSubmitting }) => (
-          <React.Fragment>
-            <div style={{ marginTop: "10px" }}>
-              <span>Memo</span>
-              <Input name="checkInOutMemo" />
-            </div>
-            <div style={{ marginTop: "10px" }}>
-              <SubmitButton disabled={isSubmitting}>Save</SubmitButton>
-            </div>
-          </React.Fragment>
+          <div style={{ marginTop: "10px", display: "flex" }}>
+            <Input name="checkInOutMemo" />
+            <SubmitButton
+              disabled={isSubmitting}
+              style={{ marginLeft: "10px" }}
+            >
+              Save
+            </SubmitButton>
+          </div>
         )}
       />
     </div>
