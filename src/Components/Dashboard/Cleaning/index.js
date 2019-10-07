@@ -19,37 +19,27 @@ export default () => {
   const [reservations, setReservations] = useState([]);
 
   async function fetchDocs() {
+    // Create new array(docs) for cleaning data.
     const docs = [];
     const query = await db
       .collection("reservations")
       .where("stayingDates", "array-contains", date.toFormat("yyyy-MM-dd"))
       .get();
     query.forEach(doc => {
-      console.log(
-        "data!!!!!!!!!",
-        doc.data().roomNumber,
-        " ",
-        doc.data().checkInDate,
-        " ",
-        doc.data().checkOutDate
-      );
       let inFlag = false;
       let outFlag = false;
 
-      console.log(
-        `checkin: ${doc.data().checkInDate}, checkout: ${
-          doc.data().checkOutDate
-        }`
-      );
+      // check if the document is check-in / check-out
       if (doc.data().checkInDate === date.toFormat("yyyy-MM-dd")) {
         inFlag = true;
       } else if (doc.data().checkOutDate === date.toFormat("yyyy-MM-dd")) {
         outFlag = true;
       }
 
+      // return nothing if the documentation is staying reservation
       if ((inFlag || outFlag) === false) return;
 
-      // docs is my new data including in, out flag
+      // find the index of docs for existing room data
       const foundIndex = docs.findIndex(item => {
         if (item.in !== undefined) {
           return item.in.roomNumber === doc.data().roomNumber;
@@ -58,32 +48,53 @@ export default () => {
           return item.out.roomNumber === doc.data().roomNumber;
         }
       });
-      console.log("fountIndex", foundIndex, " ", doc.data().roomNumber);
-      console.log("inflag", inFlag, " ", "outFlag", outFlag);
-      // TODO id 가 out id in id가 있어야되네
+
+      const combinedCleaningMemo = (foundIndex, inFlag, outFlag) => {
+        console.log("foundIndex", foundIndex);
+        let memo = "";
+        let prev = "";
+
+        if (foundIndex === -1) {
+          prev = "";
+        } else {
+          prev = docs[foundIndex].cleaningMemo
+            ? docs[foundIndex].cleaningMemo
+            : "";
+        }
+        if (inFlag) {
+          const current = doc.data().cleaningMemo
+            ? `체크인 예약건 메모: ${doc.data().cleaningMemo}\n`
+            : "";
+          memo = current + prev;
+        } else if (outFlag) {
+          console.log("out memo", doc.data().cleaningMemo);
+          const current = doc.data().cleaningMemo
+            ? `체크아웃 예약건 메모: ${doc.data().cleaningMemo}`
+            : "";
+          memo = prev + current;
+        }
+        console.log("memo", memo, foundIndex);
+        return memo;
+      };
+
+      console.log("inFLag, outFlag", inFlag, outFlag);
       if (inFlag) {
         if (foundIndex !== -1) {
-          console.log("in exist");
+          console.log("new check-in with existing check-out data");
           docs[foundIndex] = {
             ...docs[foundIndex],
             in: { ...doc.data(), id: doc.id },
-            cleaningMemo: doc.data().cleaningMemo
-              ? `${docs[foundIndex].cleaningMemo}, checkin: ${
-                  doc.data().cleaningMemo
-                }`
-              : doc[foundIndex].cleaningMemo
+            cleaningMemo: combinedCleaningMemo(foundIndex, inFlag, outFlag)
           };
         } else {
-          console.log("in new");
+          console.log("in new", foundIndex);
           docs.push({
             in: { ...doc.data(), id: doc.id },
             guestHouseName: doc.data().guestHouseName,
             checkDate: doc.data().checkInDate,
             roomNumber: doc.data().roomNumber,
             reservationCode: doc.data().reservationCode,
-            cleaningMemo: doc.data().cleaningMemo
-              ? `checkin: ${doc.data().cleaningMemo}`
-              : ""
+            cleaningMemo: combinedCleaningMemo(foundIndex, inFlag, outFlag)
           });
         }
       }
@@ -94,14 +105,10 @@ export default () => {
           docs[foundIndex] = {
             ...docs[foundIndex],
             out: { ...doc.data(), id: doc.id },
-            cleaningMemo: doc.data().cleaningMemo
-              ? `${docs[foundIndex].cleaningMemo}, checkout: ${
-                  doc.data().cleaningMemo
-                }`
-              : doc[foundIndex].cleaningMemo
+            cleaningMemo: combinedCleaningMemo(foundIndex, inFlag, outFlag)
           };
         } else {
-          console.log("out new");
+          console.log("out new", foundIndex);
           docs.push({
             out: {
               ...doc.data(),
@@ -111,9 +118,7 @@ export default () => {
             checkDate: doc.data().checkOutDate,
             roomNumber: doc.data().roomNumber,
             reservationCode: doc.data().reservationCode,
-            cleaningMemo: doc.data().cleaningMemo
-              ? `checkin: ${doc.data().cleaningMemo}`
-              : ""
+            cleaningMemo: combinedCleaningMemo(foundIndex, inFlag, outFlag)
           });
         }
       }
@@ -210,12 +215,6 @@ export default () => {
                   )
                 : 4
             } towels`}</div>
-            {console.log("outRes.cleaningmMeo", outRes.cleaningMemo)}
-            {outRes.cleaningMemo && (
-              <div style={{ color: "red" }}>
-                {`Cleaning Memo: ${outRes.cleaningMemo}`}
-              </div>
-            )}
             <div>
               {outRes.guestHouseName === "jhonor"
                 ? numOfBeds(outRes.roomNumber)
@@ -227,6 +226,9 @@ export default () => {
                 outRes.hasOwnProperty("out")
               )}
             </div>
+            {outRes.cleaningMemo && (
+              <div style={{ color: "red" }}>{outRes.cleaningMemo}</div>
+            )}
           </div>
         );
       })}
