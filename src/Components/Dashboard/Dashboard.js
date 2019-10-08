@@ -8,7 +8,7 @@ export default ({ admin, user }) => {
   return (
     <Location>
       {({ location }) => (
-        <Header style={{ display: "flex", alignItems: "center" }}>
+        <Header>
           {true ? (
             <Menu
               theme="dark"

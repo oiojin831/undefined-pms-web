@@ -25,7 +25,7 @@ class Basic extends Component {
       ViewTypes.Month,
       false,
       false,
-      rbsConfig(window.innerHeightk)
+      rbsConfig(window.innerHeight)
     );
     schedulerData.setResources(resources);
     schedulerData.setEvents([]);
