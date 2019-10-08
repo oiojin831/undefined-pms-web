@@ -6,8 +6,9 @@ import JhonorInfo from "./JhonorInfo";
 import JhonorCheckInInfo from "./JhonorCheckInInfo";
 import JhonorPlatform from "./JhonorPlatform";
 import "./index.css";
-import desktopImage from "../../bg.jpg";
+import desktopImage from "../../jhonor-bg.jpg";
 import { Link } from "@reach/router";
+import logo from "../../jhonor-logo-2.png";
 
 const JhonorSelfCheckIn = ({ children }) => {
   return (
@@ -23,7 +24,13 @@ const JhonorSelfCheckIn = ({ children }) => {
           fontWeight: "bold"
         }}
       >
-        j honor
+        <div
+          style={{
+            backgroundImage: `url(${logo})`,
+            width: "368px",
+            height: "141px"
+          }}
+        ></div>
       </div>
       {children}
       <div
