@@ -25,7 +25,7 @@ class Basic extends Component {
       ViewTypes.Month,
       false,
       false,
-      rbsConfig
+      rbsConfig(window.innerHeightk)
     );
     schedulerData.setResources(resources);
     schedulerData.setEvents([]);
@@ -44,12 +44,12 @@ class Basic extends Component {
       .where(
         "checkInDate",
         ">=",
-        formatDate(this.state.date.minus({ days: 50 }))
+        formatDate(this.state.date.minus({ days: this.state.date.day + 10 }))
       )
       .where(
         "checkInDate",
         "<=",
-        formatDate(this.state.date.plus({ days: 300 }))
+        formatDate(this.state.date.plus({ days: 60 }))
       )
       .get()
       .then(snap => {
@@ -61,6 +61,7 @@ class Basic extends Component {
             nights,
             roomNumber,
             phoneNumber,
+            payoutPrice,
             platform,
             reservationCode
           } = doc.data();
@@ -69,7 +70,7 @@ class Basic extends Component {
             start: checkInDate,
             end: checkOutDate,
             resourceId: roomNumber,
-            title: `${guestName}: ${phoneNumber}, ${reservationCode}`,
+            title: `${guestName} - ${payoutPrice}원 - ${reservationCode}`,
             nights: nights,
             bgColor: platformColor[platform]
           });
@@ -83,16 +84,14 @@ class Basic extends Component {
       viewModel.setEvents(this.state.eventsData);
     }
     return (
-      <div style={{ marginTop: "50px" }}>
-        <div style={{ fontSize: "8px" }}>
-          <Scheduler
-            schedulerData={viewModel}
-            prevClick={this.prevClick}
-            nextClick={this.nextClick}
-            onSelectDate={this.onSelectDate}
-            onViewChange={this.onViewChange}
-          />
-        </div>
+      <div style={{ fontSize: "8px" }}>
+        <Scheduler
+          schedulerData={viewModel}
+          prevClick={this.prevClick}
+          nextClick={this.nextClick}
+          onSelectDate={this.onSelectDate}
+          onViewChange={this.onViewChange}
+        />
       </div>
     );
   }

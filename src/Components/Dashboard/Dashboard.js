@@ -2,23 +2,19 @@ import React from "react";
 import { Link, Location } from "@reach/router";
 import { Layout, Menu, Icon } from "antd";
 
-const { Sider } = Layout;
+const { Sider, Header } = Layout;
 
 export default ({ admin, user }) => {
   return (
     <Location>
       {({ location }) => (
-        <Sider breakpoint="lg" collapsedWidth="0">
-          <div
-            className="logo"
-            style={{
-              height: "32px",
-              background: "rgba(255,255,255,.2)",
-              margin: "16px"
-            }}
-          />
-          {admin ? (
-            <Menu theme="dark" mode="inline" selectedKeys={[location.pathname]}>
+        <Header style={{ display: "flex", alignItems: "center" }}>
+          {true ? (
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              selectedKeys={[location.pathname]}
+            >
               <Menu.Item key="/dashboard/cleaning">
                 <Link to="cleaning">
                   <Icon type="database" /> Cleaning
@@ -74,7 +70,7 @@ export default ({ admin, user }) => {
               </Menu.Item>
             </Menu>
           ) : null}
-        </Sider>
+        </Header>
       )}
     </Location>
   );
