@@ -18,7 +18,9 @@ export default ({ children, admin, user }) => {
     <Layout style={{ height: "100vh" }}>
       <Dashboard path="/" user={user} admin={admin} />
       <Layout path="/">
-        <Content style={{ overflow: "auto" }}>{children}</Content>
+        <Content admin={admin} style={{ overflow: "auto" }}>
+          {children}
+        </Content>
       </Layout>
     </Layout>
   );

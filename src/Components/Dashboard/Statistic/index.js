@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import { db } from "../../../firebase.js";
 import { DatePicker, SubmitButton } from "@jbuschke/formik-antd";
 import { formattedNow, getDaysArray, fromISOtoString } from "../../../util";
-import Chart from "react-apexcharts";
 import { jhonorData } from "../../../Constants/roomName";
 import _ from "lodash";
 
@@ -14,7 +13,7 @@ const krwToString = price => {
   return Number(price.replace(/[^0-9\.]+/g, ""));
 };
 
-export default () => {
+export default ({ admin }) => {
   const [num, setNum] = useState(0);
   const [roomFilled, setRoomFilled] = useState(0);
   const [roomFilledFromToday, setRoomFilledFromToday] = useState(0);
@@ -159,34 +158,43 @@ export default () => {
         onSubmit={(values, actions) => {
           fetchDocs(values, actions);
         }}
-        render={({ isSubmitting, values }) => (
-          <React.Fragment>
-            <div style={{ marginTop: "50px" }}>
-              <DatePicker name="startDate" />
-              <DatePicker name="endDate" />
-            </div>
-            <div style={{ marginTop: "10px" }}>
-              <SubmitButton disabled={isSubmitting}>Submit</SubmitButton>
-            </div>
-            <div>Expected Revenue: {num}원</div>
-            <div>
-              Occupancy rate:{" "}
-              {roomFilled ? `${(roomFilled / totalRoom) * 100}%` : 0}{" "}
-            </div>
-            <div>Total number of nights: {totalRoom} </div>
-            <div>
-              Empty room from today: {totalRoomFromToday - roomFilledFromToday}{" "}
-            </div>
-            <div>
-              Empty Room from today over whole range:{" "}
-              {((totalRoomFromToday - roomFilledFromToday) / totalRoom) * 100} %
-            </div>
-            <div>날짜별: {JSON.stringify(blacnketSumDisplay)}</div>
-            <div>총 개수: {JSON.stringify(blacnketTotalSumDisplay)}</div>
+        render={({ isSubmitting, values }) => {
+          if (admin) {
+            return (
+              <React.Fragment>
+                <div style={{ marginTop: "50px" }}>
+                  <DatePicker name="startDate" />
+                  <DatePicker name="endDate" />
+                </div>
+                <div style={{ marginTop: "10px" }}>
+                  <SubmitButton disabled={isSubmitting}>Submit</SubmitButton>
+                </div>
+                <div>Expected Revenue: {num}원</div>
+                <div>
+                  Occupancy rate:{" "}
+                  {roomFilled ? `${(roomFilled / totalRoom) * 100}%` : 0}{" "}
+                </div>
+                <div>Total number of nights: {totalRoom} </div>
+                <div>
+                  Empty room from today:{" "}
+                  {totalRoomFromToday - roomFilledFromToday}{" "}
+                </div>
+                <div>
+                  Empty Room from today over whole range:{" "}
+                  {((totalRoomFromToday - roomFilledFromToday) / totalRoom) *
+                    100}{" "}
+                  %
+                </div>
+                <div>날짜별: {JSON.stringify(blacnketSumDisplay)}</div>
+                <div>총 개수: {JSON.stringify(blacnketTotalSumDisplay)}</div>
 
-            {/* <Chart options={options} series={series} type="donut" width="380" />*/}
-          </React.Fragment>
-        )}
+                {/* <Chart options={options} series={series} type="donut" width="380" />*/}
+              </React.Fragment>
+            );
+          } else {
+            return <div>N/A</div>;
+          }
+        }}
       />
     </React.Fragment>
   );
