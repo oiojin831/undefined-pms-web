@@ -159,7 +159,8 @@ export default ({ admin }) => {
           fetchDocs(values, actions);
         }}
         render={({ isSubmitting, values }) => {
-          if (admin) {
+          console.log("admin", admin);
+          if (true) {
             return (
               <React.Fragment>
                 <div style={{ marginTop: "50px" }}>

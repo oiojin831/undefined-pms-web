@@ -197,7 +197,7 @@ export default () => {
           .filter(res => res.checkDate === date.toFormat("yyyy-MM-dd"))
       ).map(outRes => {
         return (
-          <div key={outRes.reservationCode} className="box">
+          <div key={outRes.reservationCode + outRes.roomNumber} className="box">
             <h1>{outRes.roomNumber}</h1>
             <div>{`Check Out: ${
               outRes.out ? outRes.out.checkOutTime : 11
