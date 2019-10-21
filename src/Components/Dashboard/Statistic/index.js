@@ -13,14 +13,32 @@ const krwToString = price => {
   return Number(price.replace(/[^0-9\.]+/g, ""));
 };
 
+const roomSumByPlatform = (roomSum, data) => {
+  roomSum[0] = roomSum[0] + krwToString(data.payoutPrice) / data.nights;
+  switch (data.platform) {
+    case "airbnb":
+      roomSum[1] = roomSum[1] + krwToString(data.payoutPrice) / data.nights;
+      return roomSum;
+    case "agoda":
+      roomSum[2] = roomSum[2] + krwToString(data.payoutPrice) / data.nights;
+      return roomSum;
+    case "booking":
+      roomSum[3] = roomSum[3] + krwToString(data.payoutPrice) / data.nights;
+      return roomSum;
+    case "cash":
+      roomSum[4] = roomSum[4] + krwToString(data.payoutPrice) / data.nights;
+      return roomSum;
+    default:
+      return roomSum;
+  }
+};
+
 export default ({ admin }) => {
-  const [num, setNum] = useState(0);
+  const [num, setNum] = useState([0, 0, 0, 0, 0]);
   const [roomFilled, setRoomFilled] = useState(0);
   const [roomFilledFromToday, setRoomFilledFromToday] = useState(0);
   const [totalRoom, setTotalRoom] = useState(0);
   const [totalRoomFromToday, setTotalRoomFromToday] = useState(0);
-  const [blacnketSumDisplay, setBlanketSumDisplay] = useState({});
-  const [blacnketTotalSumDisplay, setBlanketTotalSumDisplay] = useState({});
   const [labels, setLabels] = useState(["reserved", "empty"]);
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
@@ -29,7 +47,8 @@ export default ({ admin }) => {
     actions.setSubmitting(true);
 
     try {
-      let totalSum = 0;
+      //total, airbnb, agoda, booking
+      let totalSum = [0, 0, 0, 0, 0];
       const dates = getDaysArray(
         new Date(fromISOtoString(values.startDate)),
         new Date(fromISOtoString(values.endDate))
@@ -43,8 +62,6 @@ export default ({ admin }) => {
       const promises = [];
       let totalFilledSum = 0;
       let totalFilledSumFromToday = 0;
-      let blanketSum = {};
-      let blanketTotalSum = [];
       dates.forEach(date => {
         const p = db
           .collection("reservations")
@@ -54,27 +71,21 @@ export default ({ admin }) => {
       });
       const snapshots = await Promise.all(promises);
       snapshots.forEach(function(snapshot, i) {
-        let daySum = 0;
+        let daySum = [0, 0, 0, 0, 0];
         let dayFilledSum = 0;
         let dayFilledSumFromToday = 0;
         let oneDayBeds = [];
         snapshot.forEach(doc => {
-          let roomSum = 0;
+          let roomSum = [0, 0, 0, 0, 0];
           if (
             doc.data().checkOutDate !== dates[i] &&
             doc.data().guestHouseName === "jhonor"
           ) {
-            roomSum =
-              roomSum + krwToString(doc.data().payoutPrice) / doc.data().nights;
-            console.log(
-              "doc.data()",
-              doc.data().reservationCode,
-              doc.data().payoutPrice,
-              doc.data().nights
-            );
-            console.log("roomSum", roomSum);
+            roomSum = roomSumByPlatform(roomSum, doc.data());
           }
-          daySum = daySum + roomSum;
+          daySum = roomSum.map(function(num, idx) {
+            return num + daySum[idx];
+          });
 
           let roomFilledSum = 0;
           let roomFilledSumFromToday = 0;
@@ -105,43 +116,18 @@ export default ({ admin }) => {
             oneDayBeds.push(jhonorData[doc.data().roomNumber].beds);
           }
         });
-        let singleBlankets = _.sumBy(oneDayBeds, room => {
-          let s = room.single ? room.single : 0;
-          let b = room.bunk ? room.bunk : 0;
-          return s + b * 2;
+        totalSum = daySum.map(function(num, idx) {
+          return num + totalSum[idx];
         });
-        let queenBlankets = _.sumBy(oneDayBeds, room => {
-          let q = room.queen ? room.queen : 0;
-          return room.queen;
-        });
-        blanketSum[dates[i]] = { single: singleBlankets, queen: queenBlankets };
-        blanketTotalSum.push({ single: singleBlankets, queen: queenBlankets });
-        totalSum = daySum + totalSum;
         console.log("totalSum", totalSum);
         totalFilledSum = dayFilledSum + totalFilledSum;
         totalFilledSumFromToday =
           dayFilledSumFromToday + totalFilledSumFromToday;
       });
 
-      let singleTotalBlankets = _.sumBy(blanketTotalSum, room => {
-        let s = room.single ? room.single : 0;
-        let b = room.bunk ? room.bunk : 0;
-        return s + b * 2;
-      });
-      let queenTotalBlankets = _.sumBy(blanketTotalSum, room => {
-        let q = room.queen ? room.queen : 0;
-        return room.queen;
-      });
-      //   setSeries([num, 30 * 17 - num]);
-      //console.log(totalPrice);
       setNum(totalSum);
       setRoomFilled(totalFilledSum);
       setRoomFilledFromToday(totalFilledSumFromToday);
-      setBlanketSumDisplay(blanketSum);
-      setBlanketTotalSumDisplay({
-        single: singleTotalBlankets,
-        queen: queenTotalBlankets
-      });
       actions.setSubmitting(false);
     } catch (error) {
       console.log("error", error.toString());
@@ -170,7 +156,11 @@ export default ({ admin }) => {
                 <div style={{ marginTop: "10px" }}>
                   <SubmitButton disabled={isSubmitting}>Submit</SubmitButton>
                 </div>
-                <div>Expected Revenue: {num}원</div>
+                <div>Expected Total Revenue: {num[0]}원</div>
+                <div>Expected Airbnb Revenue: {num[1]}원</div>
+                <div>Expected Agoda Revenue: {num[2]}원</div>
+                <div>Expected Booking Revenue: {num[3]}원</div>
+                <div>Expected cash Revenue: {num[4]}원</div>
                 <div>
                   Occupancy rate:{" "}
                   {roomFilled ? `${(roomFilled / totalRoom) * 100}%` : 0}{" "}
@@ -186,10 +176,6 @@ export default ({ admin }) => {
                     100}{" "}
                   %
                 </div>
-                <div>날짜별: {JSON.stringify(blacnketSumDisplay)}</div>
-                <div>총 개수: {JSON.stringify(blacnketTotalSumDisplay)}</div>
-
-                {/* <Chart options={options} series={series} type="donut" width="380" />*/}
               </React.Fragment>
             );
           } else {
