@@ -28,14 +28,14 @@ export default () => {
         <br />
         kakao jjb1118
         <br />
-        line dmyk_hotel
+        line korea_seoul_stay
       </div>
       <div>
         wifi
         <br />
-        id: dmyk-welcome
+        id: jhonor
         <br />
-        pw: welcometodmyk
+        pw: 77777777
       </div>
     </div>
   );

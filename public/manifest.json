@@ -8,7 +8,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/dashboard",
+  "start_url": "/jhonor-self-check-in",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

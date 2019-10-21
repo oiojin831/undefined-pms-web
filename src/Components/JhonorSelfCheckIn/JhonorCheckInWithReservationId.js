@@ -3,6 +3,12 @@ import { Formik } from "formik";
 import { Input, SubmitButton } from "@jbuschke/formik-antd";
 import { db } from "../../firebase.js";
 import { Link, navigate } from "@reach/router";
+import {
+  nowToSeconds,
+  formattedTmrToISOSeconds,
+  formattedToISOSeconds,
+  now
+} from "../../util";
 
 export default () => {
   const [noReservation, setNoReservation] = useState(null);
@@ -19,8 +25,30 @@ export default () => {
         return { ...doc.data(), id: doc.id };
       });
       actions.setSubmitting(false);
+      const resCheckInDate = tempRes[0].checkInDate;
+      const resCheckOutDate = tempRes[0].checkOutDate;
+      const printableTimeStart = formattedToISOSeconds(resCheckInDate, 13);
+      const printableTimeEnd = formattedTmrToISOSeconds(resCheckOutDate, 10);
+      const dayBeforeRes = formattedToISOSeconds(resCheckInDate, "01");
+      console.log(printableTimeStart);
       if (tempRes[0]) {
-        navigate("jhonor-platform/jhonor-check-in-info", { state: tempRes[0] });
+        if (
+          printableTimeStart < nowToSeconds &&
+          nowToSeconds < printableTimeEnd
+        )
+          navigate("jhonor-platform/jhonor-check-in-info", {
+            state: tempRes[0]
+          });
+        else if (
+          dayBeforeRes < nowToSeconds &&
+          nowToSeconds < printableTimeStart
+        ) {
+          navigate("jhonor-platform/jhonor-check-in-without-passcode", {
+            state: tempRes[0]
+          });
+        } else {
+          setNoReservation("Expired Reservation");
+        }
       } else {
         setNoReservation("There is no matching reservation");
       }

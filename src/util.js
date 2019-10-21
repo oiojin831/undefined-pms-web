@@ -6,6 +6,25 @@ const tmr = now.plus({ days: 1 });
 const yesterday = now.minus({ days: 1 });
 
 export const formattedNow = now.toFormat("yyyy-MM-dd");
+export const formattedToISOSeconds = (date, hour) => {
+  console.log(date, hour);
+  return DateTime.fromFormat(
+    `${date}T${hour}:00:00 Asia/Seoul`,
+    "yyyy-MM-dd'T'HH:mm:ss z"
+  ).toSeconds();
+};
+export const formattedTmrToISOSeconds = (date, hour) => {
+  console.log(date, hour);
+  const tmrDate = DateTime.fromISO(date, { zone: "Asia/Seoul" })
+    .plus({ days: 1 })
+    .toFormat("yyyy-MM-dd");
+  console.log("tmrDate", tmrDate);
+  return DateTime.fromFormat(
+    `${tmrDate}T${hour}:00:00 Asia/Seoul`,
+    "yyyy-MM-dd'T'HH:mm:ss z"
+  ).toSeconds();
+};
+export const nowToSeconds = now.toSeconds();
 export const formattedTmr = tmr.toFormat("yyyy-MM-dd");
 export const formattedYesterday = yesterday.toFormat("yyyy-MM-dd");
 

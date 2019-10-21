@@ -4,11 +4,12 @@ import JSCIHome from "./JSCIHome";
 import JhonorCheckInWithReservationId from "./JhonorCheckInWithReservationId";
 import JhonorInfo from "./JhonorInfo";
 import JhonorCheckInInfo from "./JhonorCheckInInfo";
+import JhonorCheckInWithoutPasscode from "./JhonorCheckInWithoutPasscode";
 import JhonorPlatform from "./JhonorPlatform";
 import "./index.css";
 import desktopImage from "../../jhonor-bg.jpg";
 import { Link } from "@reach/router";
-import logo from "../../jhonor-logo-2.png";
+import logo from "../../jhonor-logo-3.png";
 
 const JhonorSelfCheckIn = ({ children }) => {
   return (
@@ -27,21 +28,26 @@ const JhonorSelfCheckIn = ({ children }) => {
         <div
           style={{
             backgroundImage: `url(${logo})`,
-            width: "368px",
-            height: "141px"
+            width: "200px",
+            height: "174px",
+            marginRight: "100px"
           }}
         ></div>
       </div>
       {children}
-      <div
-        style={{
-          display: "flex",
-          height: "10vh",
-          justifyContent: "flex-end",
-          marginRight: "10px"
-        }}
-      >
-        <Link to="/jhonor-self-check-in">HOME</Link>
+      <div style={{ alignSelf: "center", marginLeft: "10px" }}>
+        <Link
+          style={{
+            fontSize: "30px",
+            padding: "20px 10px",
+            border: "solid 2px #FEF8D6",
+            borderRadius: "5px",
+            color: "#FEF8D6"
+          }}
+          to="/jhonor-self-check-in"
+        >
+          HOME
+        </Link>
       </div>
     </div>
   );
@@ -53,5 +59,6 @@ export {
   JhonorCheckInWithReservationId,
   JhonorInfo,
   JhonorPlatform,
-  JhonorCheckInInfo
+  JhonorCheckInInfo,
+  JhonorCheckInWithoutPasscode
 };

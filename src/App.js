@@ -35,6 +35,7 @@ import {
   JhonorPlatform,
   JhonorCheckInInfo,
   JhonorInfo,
+  JhonorCheckInWithoutPasscode,
   JSCIHome
 } from "./Components/JhonorSelfCheckIn";
 
@@ -87,6 +88,7 @@ export default () => {
             <NotFound default />
             <JhonorInfo path="jhonor-info" />
             <JhonorCheckInInfo path="jhonor-check-in-info" />
+            <JhonorCheckInWithoutPasscode path="jhonor-check-in-without-passcode" />
           </JhonorPlatform>
         </JhonorSelfCheckIn>
         <ReservationUpdate path="reservation">
