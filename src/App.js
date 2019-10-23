@@ -88,6 +88,7 @@ export default () => {
             <NotFound default />
             <JhonorInfo path="jhonor-info" />
             <JhonorCheckInInfo path="jhonor-check-in-info" />
+            <JhonorCheckInInfo path="p" />
             <JhonorCheckInWithoutPasscode path="jhonor-check-in-without-passcode" />
           </JhonorPlatform>
         </JhonorSelfCheckIn>

@@ -1,6 +1,7 @@
 import React from "react";
-
+import { navigate } from "@reach/router";
 import { jhonorData } from "../../Constants/roomName";
+import IdleTimer from "react-idle-timer";
 
 export default props => {
   return props.location ? (
@@ -17,15 +18,35 @@ export default props => {
         textAlign: "right"
       }}
     >
+      <IdleTimer
+        element={document}
+        onIdle={() => {
+          navigate("/jhonor-self-check-in/jhonor-platform/p", {
+            state: props.location.state
+          });
+        }}
+        debounce={250}
+        timeout={2000}
+      />
+      <div
+        id="checkInOut"
+        style={{ display: "none" }}
+      >{`${props.location.state.checkInDate}~${props.location.state.checkOutDate}`}</div>
+      <div id="guestName" style={{ display: "none" }}>
+        {props.location.state.guestName}
+      </div>
+
       <div>Your room is..</div>
       <br />
       <div
+        id="roomNumber"
         style={{
           fontWeight: "bold",
           fontSize: "40px"
         }}
       >{`Room ${props.location.state.roomNumber}`}</div>
       <div
+        id="passcode"
         style={{
           fontWeight: "bold",
           fontSize: "40px"

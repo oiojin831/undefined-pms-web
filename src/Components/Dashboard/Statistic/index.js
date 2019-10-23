@@ -6,6 +6,10 @@ import { formattedNow, getDaysArray, fromISOtoString } from "../../../util";
 import { jhonorData } from "../../../Constants/roomName";
 import _ from "lodash";
 
+const totalAndPercent = (platform, total) => {
+  return `${platform.toFixed(2)}원 ${((platform / total) * 100).toFixed(2)}%`;
+};
+
 const krwToString = price => {
   if (typeof price === "number") {
     return price;
@@ -156,11 +160,19 @@ export default ({ admin }) => {
                 <div style={{ marginTop: "10px" }}>
                   <SubmitButton disabled={isSubmitting}>Submit</SubmitButton>
                 </div>
-                <div>Expected Total Revenue: {num[0]}원</div>
-                <div>Expected Airbnb Revenue: {num[1]}원</div>
-                <div>Expected Agoda Revenue: {num[2]}원</div>
-                <div>Expected Booking Revenue: {num[3]}원</div>
-                <div>Expected cash Revenue: {num[4]}원</div>
+                <div>Expected Total Revenue: {Math.round(num[0])}원</div>
+                <div>
+                  Expected Airbnb Revenue: {totalAndPercent(num[1], num[0])}
+                </div>
+                <div>
+                  Expected Agoda Revenue: {totalAndPercent(num[2], num[0])}
+                </div>
+                <div>
+                  Expected Booking Revenue: {totalAndPercent(num[3], num[0])}
+                </div>
+                <div>
+                  Expected Cash Revenue: {totalAndPercent(num[4], num[0])}
+                </div>
                 <div>
                   Occupancy rate:{" "}
                   {roomFilled ? `${(roomFilled / totalRoom) * 100}%` : 0}{" "}
