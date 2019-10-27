@@ -5,6 +5,9 @@ export const now = DateTime.utc().setZone("Asia/Seoul");
 const tmr = now.plus({ days: 1 });
 const yesterday = now.minus({ days: 1 });
 
+export const receiptFormat = date =>
+  DateTime.fromISO(date, { zone: "Asia/Seoul" }).toFormat("dd.LLL");
+
 export const formattedNow = now.toFormat("yyyy-MM-dd");
 export const formattedToISOSeconds = (date, hour) => {
   console.log(date, hour);

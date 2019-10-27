@@ -2,6 +2,7 @@ import React from "react";
 import { navigate } from "@reach/router";
 import { jhonorData } from "../../Constants/roomName";
 import IdleTimer from "react-idle-timer";
+import { receiptFormat } from "../../util";
 
 export default props => {
   return props.location ? (
@@ -26,12 +27,11 @@ export default props => {
           });
         }}
         debounce={250}
-        timeout={2000}
+        timeout={3000}
       />
-      <div
-        id="checkInOut"
-        style={{ display: "none" }}
-      >{`${props.location.state.checkInDate}~${props.location.state.checkOutDate}`}</div>
+      <div id="checkInOut" style={{ display: "none" }}>{`${receiptFormat(
+        props.location.state.checkInDate
+      )}~${receiptFormat(props.location.state.checkOutDate)}`}</div>
       <div id="guestName" style={{ display: "none" }}>
         {props.location.state.guestName}
       </div>

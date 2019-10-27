@@ -3,8 +3,8 @@ import { Formik } from "formik";
 import { Input, SubmitButton } from "@jbuschke/formik-antd";
 import { db } from "../../firebase.js";
 import { Link, navigate } from "@reach/router";
+import { DateTime } from "luxon";
 import {
-  nowToSeconds,
   formattedTmrToISOSeconds,
   formattedToISOSeconds,
   now
@@ -30,18 +30,35 @@ export default () => {
       const printableTimeStart = formattedToISOSeconds(resCheckInDate, 13);
       const printableTimeEnd = formattedTmrToISOSeconds(resCheckOutDate, 10);
       const dayBeforeRes = formattedToISOSeconds(resCheckInDate, "01");
+      console.log(dayBeforeRes);
+      console.log(
+        DateTime.utc()
+          .setZone("Asia/Seoul")
+          .toSeconds()
+      );
+      console.log(printableTimeStart);
       console.log(printableTimeStart);
       if (tempRes[0]) {
         if (
-          printableTimeStart < nowToSeconds &&
-          nowToSeconds < printableTimeEnd
+          printableTimeStart <
+            DateTime.utc()
+              .setZone("Asia/Seoul")
+              .toSeconds() &&
+          DateTime.utc()
+            .setZone("Asia/Seoul")
+            .toSeconds() < printableTimeEnd
         )
           navigate("jhonor-platform/jhonor-check-in-info", {
             state: tempRes[0]
           });
         else if (
-          dayBeforeRes < nowToSeconds &&
-          nowToSeconds < printableTimeStart
+          dayBeforeRes <
+            DateTime.utc()
+              .setZone("Asia/Seoul")
+              .toSeconds() &&
+          DateTime.utc()
+            .setZone("Asia/Seoul")
+            .toSeconds() < printableTimeStart
         ) {
           navigate("jhonor-platform/jhonor-check-in-without-passcode", {
             state: tempRes[0]
