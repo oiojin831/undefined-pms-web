@@ -27,7 +27,7 @@ export default props => {
           });
         }}
         debounce={250}
-        timeout={3000}
+        timeout={1000}
       />
       <div id="checkInOut" style={{ display: "none" }}>{`${receiptFormat(
         props.location.state.checkInDate

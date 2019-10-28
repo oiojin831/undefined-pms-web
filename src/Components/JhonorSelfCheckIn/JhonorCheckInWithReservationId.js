@@ -111,6 +111,7 @@ export default () => {
               }}
             >
               <Input
+                id="reservationCode"
                 name="reservationCode"
                 placeholder="32239992"
                 size="large"

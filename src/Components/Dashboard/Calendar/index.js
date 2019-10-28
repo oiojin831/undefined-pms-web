@@ -49,7 +49,7 @@ class Basic extends Component {
       .where(
         "checkInDate",
         "<=",
-        formatDate(this.state.date.plus({ days: 60 }))
+        formatDate(this.state.date.plus({ days: 180 }))
       )
       .get()
       .then(snap => {
