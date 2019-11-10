@@ -65,7 +65,9 @@ Stop : Myeongdong
 06:00 - 21:00
 
 * Walk 7minute from Myeongdong station.
-Myeongdong station -> our hostel(copy url and open in new browser) :
-https://youtu.be/523knykZ3nc
+
+***Please copy url and open in new browser***
+
+https://udfd-instructions.oiojin831.now.sh/jhonor
   `;
 };

@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "jhonor-self-check-in",
-  "alias": "jhonor-self-check-in",
+  "name": "undefined-pms-web",
+  "alias": "undefined-pms-web",
   "builds": [
     {
       "src": "package.json",
