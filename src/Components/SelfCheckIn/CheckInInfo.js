@@ -2,35 +2,35 @@ import React from "react";
 
 const passCode = {
   dmyk101: {
-    passCode: "0423🔓",
+    passCode: "1372🔓",
     wifi: "dmyk1-1 / dmykdmyk11 or dmyk-1-lounge / dmykseoul1228"
   },
   dmyk102: {
-    passCode: "9849🔓",
+    passCode: "8731🔓",
     wifi: "dmyk-101 / dmykdmyk101 or dmyk1-1 / dmykdmyk11"
   },
   dmyk103: {
-    passCode: "3184🔓",
+    passCode: "1045🔓",
     wifi: "dmyk-101 / dmykdmyk101 or dmyk1-1 / dmykdmyk11"
   },
   dmyk104: {
-    passCode: "1169🔓",
+    passCode: "4370🔓",
     wifi: "dmyk-101 / dmykdmyk101 or dmyk1-1 / dmykdmyk11"
   },
   dmyk201: {
-    passCode: "1985🔓",
+    passCode: "2076🔓",
     wifi: "dmyk2 / dmykdmyk2 or dmyk2-2 / dmykdmyk22"
   },
   dmyk202: {
-    passCode: "7820🔓",
+    passCode: "5832🔓",
     wifi: "dmyk2-3 / dmykdmyk23 or dmyk2-2 / dmykdmyk22"
   },
   dmyk203: {
-    passCode: "1627🔓",
+    passCode: "3317🔓",
     wifi: "dmyk2-4 / dmykdmyk24 or dmyk2-3 / dmykdmyk23"
   },
   dmyk204: {
-    passCode: "8265🔓",
+    passCode: "0316🔓",
     wifi: "dmyk2-4 / dmykdmyk24 or dmyk2-3 / dmykdmyk23"
   },
   dmyk300: { passCode: "121210*", wifi: "dmyk / checkout10" }
