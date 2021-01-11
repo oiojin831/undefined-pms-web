@@ -2,6 +2,9 @@
   "name": "undefined-pms-web",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
     "@jbuschke/formik-antd": "^0.12.2",
     "@reach/router": "^1.2.1",
